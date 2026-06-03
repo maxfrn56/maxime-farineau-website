@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Maxime Farineau — Développeur web full stack freelance basé à Biarritz. Sites vitrine, e-commerce, applications web et intégration IA." />
+  <title>Maxime Farineau — Développeur Web Full Stack</title>
+  <script>
+    (function () {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+      if (nav && nav.type === 'reload') {
+        window.scrollTo(0, 0);
+        document.documentElement.classList.add('is-preloading');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/hero-preview.css" />
+  <link rel="stylesheet" href="css/project.css" id="project-css" />
+</head>
+<body class="page-home" data-barba="wrapper">
+
+  <!-- ═══════════════════════════════════════
+       GRAIN OVERLAY
+  ═══════════════════════════════════════ -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <div id="barba-transition" class="barba-transition" aria-hidden="true">
+    <div class="barba-transition__bg"></div>
+    <span class="barba-transition__meta tag-code"></span>
+    <h2 class="barba-transition__title"></h2>
+    <div class="barba-transition__progress"><span></span></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PRELOADER
+  ═══════════════════════════════════════ -->
+  <div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader__bg"></div>
+    <div class="preloader__content">
+      <div class="preloader__counter-wrap">
+        <span id="preloader-counter" class="preloader__counter">00</span>
+        <span class="preloader__percent">%</span>
+      </div>
+      <div class="preloader__label">// initializing experience...</div>
+      <div class="preloader__progress">
+        <div class="preloader__progress-bar" id="preloader-bar"></div>
+      </div>
+      <div class="preloader__name">MAXIME FARINEAU</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════ -->
+  <nav id="nav" class="nav">
+    <a href="index.html" class="nav__logo" aria-label="Accueil">
+      <img src="assets/logo.png" alt="Maxime Farineau" class="nav__logo-img" />
+    </a>
+    <div class="nav__links">
+      <a href="index.html" class="nav__link" data-text="Home"><span>Home</span></a>
+      <a href="#works" class="nav__link" data-text="Work"><span>Work</span></a>
+      <button class="nav__link nav__contact-btn" data-panel-trigger data-text="Contact" aria-label="Ouvrir le formulaire de contact"><span>Contact</span></button>
+    </div>
+    <div class="nav__status">
+      <span class="nav__dot"></span>
+      <span>Disponible</span>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       MAIN
+  ═══════════════════════════════════════ -->
+  <main id="main" data-barba="container" data-barba-namespace="home">
+
+    <!-- ─── HERO ─── -->
+    <section id="hero" class="section section--hero">
+      <div class="hero__img-blur" aria-hidden="true"></div>
+      <div class="hero__tag">
+        <span class="tag-code">// const vision = code + creativity;</span>
+      </div>
+
+      <!-- Main body: title left · intro right -->
+      <div class="hero__body">
+
+        <div class="hero__title-wrap">
+          <h1 class="hero__title">
+            <span class="hero__line txt-stroke--light" data-split>TURNING COMPLEX</span>
+            <span class="hero__line hero__line--fill" data-split>IDEAS INTO</span>
+            <span class="hero__line txt-stroke--light" data-split>FUNCTIONAL</span>
+            <span class="hero__line hero__line--fill" data-split>WEBSITES.</span>
+          </h1>
+        </div>
+
+        <div class="hero__intro">
+          <div class="hero__intro-status">
+            <span class="nav__dot"></span>
+            <span>Disponible pour de nouveaux projets</span>
+          </div>
+          <p class="hero__intro-text">
+            <span class="hero__intro-name">Maxime</span><span class="hero__intro-sep"> | </span><span class="hero__intro-role">Full-Stack Developer &amp; Digital Craftsman.</span>
+          </p>
+          <p class="hero__intro-location">Based in Biarritz.</p>
+          <div class="hero__intro-actions">
+            <button class="btn-outline" data-panel-trigger>
+              <span>Démarrer un projet</span>
+              <span class="btn-outline__arrow">→</span>
+            </button>
+            <a href="#works" class="cta-badge" aria-label="Voir mes projets">
+              <svg class="cta-badge__ring" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+                <defs>
+                  <path id="badge-circle" d="M 60,60 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0"/>
+                </defs>
+                <text>
+                  <textPath href="#badge-circle" startOffset="0%">
+                    VOIR MES PROJETS · VOIR MES PROJETS · 
+                  </textPath>
+                </text>
+              </svg>
+              <div class="cta-badge__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 19L19 5M19 5H8M19 5V16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="hero__footer">
+        <div class="hero__scroll">
+          <div class="hero__scroll-line"></div>
+          <span>scroll</span>
+        </div>
+      </div>
+
+      <div class="hero__name-bar">
+        <div class="hero__name-row">
+          <span class="hero__name js-hero-name">MAXIME</span>
+
+          <div class="hero__name-imgs js-hero-name-imgs" aria-live="polite"></div>
+
+          <span class="hero__name js-hero-name">FARINEAU</span>
+        </div>
+        <span class="hero__location">Biarritz, France</span>
+      </div>
+    </section>
+
+    <!-- ─── MARQUEE ─── -->
+    <div class="marquee-section" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee__inner">
+          <span>REACT</span><span class="sep">✦</span>
+          <span>NODE.JS</span><span class="sep">✦</span>
+          <span>PYTHON</span><span class="sep">✦</span>
+          <span>SHOPIFY</span><span class="sep">✦</span>
+          <span>WEBFLOW</span><span class="sep">✦</span>
+          <span>INTÉGRATION IA</span><span class="sep">✦</span>
+          <span>E-COMMERCE</span><span class="sep">✦</span>
+          <span>NEXT.JS</span><span class="sep">✦</span>
+          <span>PRESTASHOP</span><span class="sep">✦</span>
+        </div>
+        <div class="marquee__inner" aria-hidden="true">
+          <span>REACT</span><span class="sep">✦</span>
+          <span>NODE.JS</span><span class="sep">✦</span>
+          <span>PYTHON</span><span class="sep">✦</span>
+          <span>SHOPIFY</span><span class="sep">✦</span>
+          <span>WEBFLOW</span><span class="sep">✦</span>
+          <span>INTÉGRATION IA</span><span class="sep">✦</span>
+          <span>E-COMMERCE</span><span class="sep">✦</span>
+          <span>NEXT.JS</span><span class="sep">✦</span>
+          <span>PRESTASHOP</span><span class="sep">✦</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── STATEMENT ─── -->
+    <section id="statement" class="section--statement" aria-label="Manifesto">
+
+      <div class="statement__terminal">
+
+        <div class="statement__terminal-bar">
+          <span class="statement__terminal-label">// MANIFESTO</span>
+          <span class="statement__terminal-meta">MAXIME FARINEAU · BIARRITZ 2026</span>
+        </div>
+
+        <div class="statement__board">
+          <div class="statement__row" data-flip="I WORK WITH AMBITIOUS">
+            <span class="statement__row-idx">01</span>
+            <span class="statement__row-text js-flip"></span>
+          </div>
+          <div class="statement__row" data-flip="ENTREPRENEURS &amp; COMPANIES">
+            <span class="statement__row-idx">02</span>
+            <span class="statement__row-text js-flip"></span>
+          </div>
+          <div class="statement__row" data-flip="TO CREATE WEBSITES AND APPS">
+            <span class="statement__row-idx">03</span>
+            <span class="statement__row-text js-flip"></span>
+          </div>
+          <div class="statement__row statement__row--accent" data-flip="THAT MAKE A DIFFERENCE.">
+            <span class="statement__row-idx">04</span>
+            <span class="statement__row-text js-flip"></span>
+          </div>
+        </div>
+
+        <div class="statement__terminal-footer">
+          <span>// FULL STACK DEVELOPER</span>
+          <span>BIARRITZ, FRANCE</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ─── WORKS ─── -->
+    <section id="works" class="section--works-roulette">
+
+      <div class="roulette__meta">
+        <div class="section__meta">
+          <span class="section__num">01</span>
+          <span class="tag-code">// selected_works</span>
+        </div>
+        <div class="roulette__counter">
+          <span class="roulette__counter-cur" id="roulette-count">01</span>
+          <span class="roulette__counter-sep"> / </span>
+          <span>05</span>
+        </div>
+      </div>
+
+      <div class="roulette" id="roulette">
+
+        <div class="roulette__left">
+          <div class="roulette__track" id="roulette-track">
+
+            <div class="roulette__item" data-idx="0">
+              <span class="roulette__num">01</span>
+              <div class="roulette__info">
+                <h3 class="roulette__title">Saline Céviché</h3>
+                <span class="roulette__type">Restaurant · Site Vitrine</span>
+              </div>
+              <span class="roulette__year">2024</span>
+            </div>
+
+            <div class="roulette__item" data-idx="1">
+              <span class="roulette__num">02</span>
+              <div class="roulette__info">
+                <h3 class="roulette__title">Cap'Nage</h3>
+                <span class="roulette__type">Sport & Bien-être · Web App</span>
+              </div>
+              <span class="roulette__year">2024</span>
+            </div>
+
+            <div class="roulette__item" data-idx="2">
+              <span class="roulette__num">03</span>
+              <div class="roulette__info">
+                <h3 class="roulette__title">SimplyLeads</h3>
+                <span class="roulette__type">SaaS · Application Web</span>
+              </div>
+              <span class="roulette__year">2025</span>
+            </div>
+
+            <div class="roulette__item" data-idx="3">
+              <span class="roulette__num">04</span>
+              <div class="roulette__info">
+                <h3 class="roulette__title">JMMC Shop</h3>
+                <span class="roulette__type">Mode · E-Commerce Shopify</span>
+              </div>
+              <span class="roulette__year">2024</span>
+            </div>
+
+            <div class="roulette__item" data-idx="4">
+              <span class="roulette__num">05</span>
+              <div class="roulette__info">
+                <h3 class="roulette__title">Laetitia Nutrition</h3>
+                <span class="roulette__type">Nutrition · Site Vitrine</span>
+              </div>
+              <span class="roulette__year">2025</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="roulette__right">
+          <div class="roulette__preview" id="roulette-preview">
+
+            <div class="roulette__card roulette__card--saline" data-idx="0" style="background:#0B1A0E;">
+              <div class="roulette__card-noise"></div>
+              <div class="roulette__card-logo-wrap" aria-hidden="true">
+                <img class="roulette__card-logo" src="assets/hero/saline-logo.png" alt="" width="200" height="200" />
+              </div>
+              <div class="roulette__card-inner">
+                <span class="roulette__card-label">Restaurant · Site Vitrine</span>
+                <h3 class="roulette__card-title">Saline<br>Céviché</h3>
+                <p class="roulette__card-desc">Expérience digitale immersive pour un restaurant de cuisine marine à Biarritz.</p>
+                <a href="projets/saline-ceviche.html" class="roulette__card-link js-project-link" data-project-transition="saline-ceviche"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
+              </div>
+            </div>
+
+            <div class="roulette__card roulette__card--cap-nage" data-idx="1" style="background:#0A1220;">
+              <div class="roulette__card-noise"></div>
+              <div class="roulette__card-logo-wrap" aria-hidden="true">
+                <img class="roulette__card-logo" src="assets/hero/cap-nage-logo.png" alt="" width="200" height="200" />
+              </div>
+              <div class="roulette__card-inner">
+                <span class="roulette__card-label">Sport & Bien-être · Web App</span>
+                <h3 class="roulette__card-title">Cap'<br>Nage</h3>
+                <p class="roulette__card-desc">Plateforme de réservation en ligne pour une école de natation du littoral basque.</p>
+                <a href="projets/cap-nage.html" class="roulette__card-link js-project-link" data-project-transition="cap-nage"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
+              </div>
+            </div>
+
+            <div class="roulette__card roulette__card--simply-leads" data-idx="2" style="background:#160E1E;">
+              <div class="roulette__card-noise"></div>
+              <div class="roulette__card-logo-wrap" aria-hidden="true">
+                <img class="roulette__card-logo" src="assets/hero/simply-leads-logo.png" alt="" width="200" height="200" />
+              </div>
+              <div class="roulette__card-inner">
+                <span class="roulette__card-label">SaaS · Application Web</span>
+                <h3 class="roulette__card-title">Simply<br>Leads</h3>
+                <p class="roulette__card-desc">Outil de génération et gestion de leads pensé pour les PME et indépendants.</p>
+                <a href="projets/simply-leads.html" class="roulette__card-link js-project-link" data-project-transition="simply-leads"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
+              </div>
+            </div>
+
+            <div class="roulette__card roulette__card--jmmc" data-idx="3" style="background:#1A1006;">
+              <div class="roulette__card-noise"></div>
+              <div class="roulette__card-logo-wrap" aria-hidden="true">
+                <img class="roulette__card-logo" src="assets/hero/jmmc-logo.png" alt="" width="200" height="200" />
+              </div>
+              <div class="roulette__card-inner">
+                <span class="roulette__card-label">Mode · E-Commerce Shopify</span>
+                <h3 class="roulette__card-title">JMMC<br>Shop</h3>
+                <p class="roulette__card-desc">Boutique en ligne haut de gamme sur mesure pour une marque de mode locale.</p>
+                <a href="projets/jmmc-shop.html" class="roulette__card-link js-project-link" data-project-transition="jmmc-shop"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
+              </div>
+            </div>
+
+            <div class="roulette__card roulette__card--laetitia" data-idx="4" style="background:#0E1A0C;">
+              <div class="roulette__card-noise"></div>
+              <div class="roulette__card-logo-wrap" aria-hidden="true">
+                <img class="roulette__card-logo" src="assets/hero/laetitia-logo.png" alt="" width="200" height="200" />
+              </div>
+              <div class="roulette__card-inner">
+                <span class="roulette__card-label">Nutrition · Site Vitrine</span>
+                <h3 class="roulette__card-title">Laetitia<br>Nutrition</h3>
+                <p class="roulette__card-desc">Site vitrine et blog pour une diététicienne nutritionniste indépendante.</p>
+                <a href="projets/laetitia-nutrition.html" class="roulette__card-link js-project-link" data-project-transition="laetitia-nutrition"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── ABOUT (light section) ─── -->
+    <section id="about" class="section section--about section--light">
+      <div class="section__header">
+        <div class="section__meta">
+          <span class="section__num">02</span>
+          <span class="tag-code">// about.me</span>
+        </div>
+        <h2 class="section__title js-reveal-title">À Propos</h2>
+      </div>
+
+      <div class="about__content">
+        <div class="about__text">
+          <p class="about__statement js-reveal-text">
+            Je transforme vos idées en <em>expériences digitales</em> qui font la différence — Créer un projet qui vous ressemble.
+          </p>
+          <p class="about__body">
+            Basé à Biarritz, je travaille avec des acteurs locaux pour créer des sites internet et applications sur mesure. Chaque projet est traité avec la même exigence : performance, esthétique et résultats.
+          </p>
+          <div class="about__tags" aria-label="Stack technique">
+            <span>React</span>
+            <span>Node.js</span>
+            <span>Python</span>
+            <span>Next.js</span>
+            <span>Shopify</span>
+            <span>Webflow</span>
+            <span>IA</span>
+          </div>
+          <button class="cta-wide" data-panel-trigger>
+            <span class="cta-wide__text">Tell me about your idea</span>
+            <span class="cta-wide__arrow">↗</span>
+          </button>
+        </div>
+        <div class="about__code-wrap">
+          <div class="code-block">
+            <div class="code-block__header">
+              <div class="code-block__dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-block__filename">maxime.config.js</span>
+            </div>
+            <div class="code-block__body">
+<pre><code class="js-code-typing"><span class="tok-kw">const</span> <span class="tok-var">maxime</span> = {
+  location: <span class="tok-str">"Biarritz, France"</span>,
+  role: <span class="tok-str">"Full Stack Developer"</span>,
+  stack: [
+    <span class="tok-str">"React"</span>, <span class="tok-str">"Node.js"</span>,
+    <span class="tok-str">"Python"</span>, <span class="tok-str">"Next.js"</span>
+  ],
+  platforms: [
+    <span class="tok-str">"Shopify"</span>, <span class="tok-str">"Webflow"</span>,
+    <span class="tok-str">"PrestaShop"</span>, <span class="tok-str">"Wix"</span>
+  ],
+  aiIntegration: <span class="tok-bool">true</span>,
+  available: <span class="tok-bool">true</span>
+};</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── SERVICES (dark section) ─── -->
+    <section id="services" class="section section--services">
+      <div class="section__header">
+        <div class="section__meta">
+          <span class="section__num">03</span>
+          <span class="tag-code">// services.map(s => s.deliver())</span>
+        </div>
+        <h2 class="section__title js-reveal-title txt-stroke--light">Services</h2>
+      </div>
+
+      <div class="services-console" id="services-console">
+
+        <div class="services-console__bar">
+          <span class="services-console__label">// SERVICE_DIRECTORY</span>
+          <span class="services-console__status">SYS_NAV · 08 MODULES</span>
+        </div>
+
+        <div class="services-console__body">
+
+          <nav class="services-console__nav" aria-label="Services proposés">
+            <button type="button" class="services-nav__item is-active" data-service="0" aria-selected="true">
+              <span class="services-nav__idx">01</span>
+              <span class="services-nav__name">Site Vitrine</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+            <button type="button" class="services-nav__item" data-service="1" aria-selected="false">
+              <span class="services-nav__idx">02</span>
+              <span class="services-nav__name">Site E-Commerce</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+            <button type="button" class="services-nav__item" data-service="2" aria-selected="false">
+              <span class="services-nav__idx">03</span>
+              <span class="services-nav__name">Intégration IA</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+            <button type="button" class="services-nav__item" data-service="3" aria-selected="false">
+              <span class="services-nav__idx">04</span>
+              <span class="services-nav__name">Application Web</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+            <button type="button" class="services-nav__item" data-service="4" aria-selected="false">
+              <span class="services-nav__idx">05</span>
+              <span class="services-nav__name">API & Intégrations</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+            <button type="button" class="services-nav__item" data-service="5" aria-selected="false">
+              <span class="services-nav__idx">06</span>
+              <span class="services-nav__name">SEO & Référencement</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+            <button type="button" class="services-nav__item" data-service="6" aria-selected="false">
+              <span class="services-nav__idx">07</span>
+              <span class="services-nav__name">UX/UI & Design</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+            <button type="button" class="services-nav__item" data-service="7" aria-selected="false">
+              <span class="services-nav__idx">08</span>
+              <span class="services-nav__name">Maintenance</span>
+              <span class="services-nav__arrow">→</span>
+            </button>
+          </nav>
+
+          <div class="services-console__panel-wrap">
+            <div class="services-console__panel" id="services-panel">
+              <article class="services-panel is-active" data-panel="0">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">Site Vitrine</h3>
+                  <p class="services-panel__lead">Un site qui présente votre activité avec clarté, performance et une identité visuelle mémorable.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">Délai moyen</span>
+                    <span class="services-stat__value"><span data-count="4" data-suffix=" sem.">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Score perf.</span>
+                    <span class="services-stat__value"><span data-count="95" data-suffix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Pages type</span>
+                    <span class="services-stat__value"><span data-count="8" data-prefix="~">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Rebond cible</span>
+                    <span class="services-stat__value"><span data-count="42" data-suffix="%">0</span></span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>Architecture SEO & structure sémantique dès le wireframe</li>
+                  <li>Design sur mesure + micro-interactions fluides</li>
+                  <li>CMS ou stack React/Next selon vos besoins</li>
+                  <li>Connexion formulaires, analytics & outils tiers</li>
+                  <li>Formation à la prise en main incluse</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Fourchette indicative</span>
+                    <span class="services-panel__price-value">à partir de <span data-count="700">0</span> €</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Parler de mon site vitrine</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+              <article class="services-panel" data-panel="1">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">Site E-Commerce</h3>
+                  <p class="services-panel__lead">Boutiques pensées pour convertir : parcours d'achat fluide, paiement sécurisé et gestion simplifiée.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">Délai moyen</span>
+                    <span class="services-stat__value"><span data-count="8" data-suffix=" sem.">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Conv. cible</span>
+                    <span class="services-stat__value"><span data-count="3" data-suffix="%">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Produits</span>
+                    <span class="services-stat__value"><span data-count="500" data-prefix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Uptime</span>
+                    <span class="services-stat__value"><span data-count="99" data-suffix="%">0</span></span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>Shopify, PrestaShop ou solution sur mesure Node/React</li>
+                  <li>Tunnel de commande optimisé mobile-first</li>
+                  <li>Connexion ERP, stock & logistique si besoin</li>
+                  <li>Analytics e-commerce & suivi des ventes</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Fourchette indicative</span>
+                    <span class="services-panel__price-value">à partir de <span data-count="1800">0</span> €</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Lancer ma boutique</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+              <article class="services-panel" data-panel="2">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">Intégration IA</h3>
+                  <p class="services-panel__lead">Automatisez vos tâches répétitives et enrichissez vos outils avec des assistants IA sur mesure.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">POC livré en</span>
+                    <span class="services-stat__value"><span data-count="3" data-suffix=" sem.">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Gain temps</span>
+                    <span class="services-stat__value"><span data-count="40" data-suffix="%">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Intégrations</span>
+                    <span class="services-stat__value"><span data-count="12" data-prefix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Modèles IA</span>
+                    <span class="services-stat__value"><span data-count="3">0</span></span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>Chatbots, RAG sur vos documents internes</li>
+                  <li>Automatisation CRM, support & reporting</li>
+                  <li>OpenAI, Anthropic, modèles open-source</li>
+                  <li>Conformité RGPD & hébergement EU possible</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Tarification</span>
+                    <span class="services-panel__price-value">Sur devis selon le projet</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Explorer l'intégration IA</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+              <article class="services-panel" data-panel="3">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">Application Web</h3>
+                  <p class="services-panel__lead">Outils métier, SaaS et plateformes sur mesure — robustes, évolutifs et pensés pour vos utilisateurs.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">Délai type</span>
+                    <span class="services-stat__value"><span data-count="12" data-suffix=" sem.">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Utilisateurs</span>
+                    <span class="services-stat__value"><span data-count="1000" data-prefix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">API endpoints</span>
+                    <span class="services-stat__value"><span data-count="24" data-prefix="~">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Couverture tests</span>
+                    <span class="services-stat__value"><span data-count="80" data-suffix="%">0</span></span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>Architecture React + API Node ou Python</li>
+                  <li>Auth, rôles, tableaux de bord & workflows</li>
+                  <li>API REST / GraphQL & connexion services tiers</li>
+                  <li>Déploiement cloud, CI/CD & monitoring</li>
+                  <li>Documentation technique & passation équipe</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Tarification</span>
+                    <span class="services-panel__price-value">Sur devis selon le projet</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Concevoir mon application</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+              <article class="services-panel" data-panel="4">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">API & Intégrations</h3>
+                  <p class="services-panel__lead">Reliez votre site ou application à vos outils métier : CRM, paiement, ERP, newsletter, automatisations — données synchronisées en temps réel.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">Délai type</span>
+                    <span class="services-stat__value"><span data-count="3" data-suffix=" sem.">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Connecteurs</span>
+                    <span class="services-stat__value"><span data-count="20" data-prefix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Webhooks</span>
+                    <span class="services-stat__value"><span data-count="15" data-prefix="~">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Disponibilité</span>
+                    <span class="services-stat__value"><span data-count="99" data-suffix="%">0</span></span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>API REST, GraphQL & webhooks sur mesure</li>
+                  <li>Stripe, PayPal, HubSpot, Notion, Airtable, Zapier / Make</li>
+                  <li>Synchronisation CRM, stocks, facturation & emailing</li>
+                  <li>Documentation OpenAPI & tests d'intégration</li>
+                  <li>Sécurisation des clés, logs & gestion des erreurs</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Tarification</span>
+                    <span class="services-panel__price-value">Sur devis selon le projet</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Connecter mes outils</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+              <article class="services-panel" data-panel="5">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">SEO & Référencement</h3>
+                  <p class="services-panel__lead">Référencement naturel durable : technique, contenu et autorité pour gagner en visibilité sur Google et capter un trafic qualifié.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">Audit livré en</span>
+                    <span class="services-stat__value"><span data-count="10" data-suffix=" j">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Pages optimisées</span>
+                    <span class="services-stat__value"><span data-count="30" data-prefix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Core Web Vitals</span>
+                    <span class="services-stat__value"><span data-count="90" data-suffix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">SEO local</span>
+                    <span class="services-stat__value"><span data-count="100" data-suffix="%">0</span></span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>Audit SEO technique, sémantique & concurrentiel</li>
+                  <li>Balises, maillage interne, sitemap & données structurées</li>
+                  <li>Google Search Console & suivi des positions</li>
+                  <li>Optimisation contenus, mots-clés & intention de recherche</li>
+                  <li>SEO local (Google Business) — idéal PME & indépendants</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Tarification</span>
+                    <span class="services-panel__price-value">Sur devis selon le projet</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Booster ma visibilité</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+              <article class="services-panel" data-panel="6">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">UX/UI & Design</h3>
+                  <p class="services-panel__lead">Interfaces claires, identité visuelle cohérente et parcours utilisateur pensés pour convertir — du wireframe au design system.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">Délai maquette</span>
+                    <span class="services-stat__value"><span data-count="2" data-suffix=" sem.">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Écrans type</span>
+                    <span class="services-stat__value"><span data-count="12" data-prefix="~">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Composants UI</span>
+                    <span class="services-stat__value"><span data-count="40" data-prefix="+">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Accessibilité</span>
+                    <span class="services-stat__value">WCAG AA</span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>Wireframes, prototypes Figma & tests utilisateurs</li>
+                  <li>Design system, typographie & palette sur mesure</li>
+                  <li>UI responsive mobile-first & micro-interactions</li>
+                  <li>Accessibilité WCAG (contrastes, navigation clavier)</li>
+                  <li>Handoff développeur & assets exportés</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Tarification</span>
+                    <span class="services-panel__price-value">Sur devis selon le projet</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Designer mon interface</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+              <article class="services-panel" data-panel="7">
+                <header class="services-panel__head">
+                  <span class="services-panel__tag">ACTIVE_CONTEXT</span>
+                  <h3 class="services-panel__title">Maintenance & Évolution</h3>
+                  <p class="services-panel__lead">Votre site ou application reste sécurisé, performant et à jour — corrections, évolutions et monitoring sans interruption d'activité.</p>
+                </header>
+                <div class="services-panel__stats">
+                  <div class="services-stat">
+                    <span class="services-stat__label">Réponse</span>
+                    <span class="services-stat__value"><span data-count="24" data-suffix="h">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Uptime cible</span>
+                    <span class="services-stat__value"><span data-count="99" data-suffix="%">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Mises à jour</span>
+                    <span class="services-stat__value"><span data-count="4" data-suffix="/mois">0</span></span>
+                  </div>
+                  <div class="services-stat">
+                    <span class="services-stat__label">Sauvegardes</span>
+                    <span class="services-stat__value"><span data-count="7" data-suffix="j">0</span></span>
+                  </div>
+                </div>
+                <ul class="services-panel__list">
+                  <li>Correctifs, patches de sécurité & dépendances</li>
+                  <li>Monitoring uptime, performances & alertes</li>
+                  <li>Petites évolutions fonctionnelles & contenus</li>
+                  <li>Sauvegardes automatiques & plan de reprise</li>
+                  <li>Rapport mensuel & point de suivi</li>
+                </ul>
+                <footer class="services-panel__foot">
+                  <div class="services-panel__price">
+                    <span class="services-panel__price-label">Tarification</span>
+                    <span class="services-panel__price-value">Sur devis selon le projet</span>
+                  </div>
+                  <button type="button" class="services-panel__cta btn-outline" data-panel-trigger>
+                    <span>Sécuriser mon site</span>
+                    <span class="btn-outline__arrow">→</span>
+                  </button>
+                </footer>
+              </article>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ─── CONTACT (light section) ─── -->
+    <section id="contact" class="section section--contact section--light">
+      <div class="contact__tag">
+        <span class="tag-code">// 404: mediocrity not found</span>
+      </div>
+      <div class="contact__title-wrap">
+        <h2 class="contact__title">
+          <span class="contact__line txt-stroke--dark" data-split>DÉMARRONS</span>
+          <span class="contact__line contact__line--italic" data-split>ensemble</span>
+        </h2>
+      </div>
+      <div class="contact__footer">
+        <button class="contact__email contact__open-panel" data-panel-trigger data-cursor="view">
+          <span class="contact__email-text">Tell me about your idea</span>
+          <span class="contact__email-arrow">↗</span>
+        </button>
+        <a href="mailto:contact@maximefarineau.com" class="contact__mail-link">contact@maximefarineau.com</a>
+        <div class="contact__infos">
+          <div class="contact__info-row">
+            <span class="contact__info-label">Localisation</span>
+            <span>Biarritz, France</span>
+          </div>
+          <div class="contact__info-row">
+            <span class="contact__info-label">Statut</span>
+            <span class="contact__available"><span class="nav__dot"></span> Disponible</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer id="footer" class="footer">
+    <div class="footer__inner" id="footer-inner">
+      <a href="index.html" class="footer__brand" aria-label="Accueil">
+        <span class="footer__name">MAXIME FARINEAU</span>
+      </a>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <span class="footer__col-title">Pages</span>
+          <nav class="footer__nav" aria-label="Pages du site">
+            <a href="#works" class="footer__link">Work</a>
+            <a href="#about" class="footer__link">About</a>
+            <a href="mentions-legales.html" class="footer__link">Mentions légales</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <span class="footer__col-title">Contact</span>
+          <a href="mailto:contact@maximefarineau.com" class="footer__link">contact@maximefarineau.com</a>
+          <a href="tel:+33669347443" class="footer__link">06 69 34 74 43</a>
+          <button type="button" class="footer__link footer__link--btn" data-panel-trigger>Discuter d'un projet →</button>
+        </div>
+        <div class="footer__col">
+          <span class="footer__col-title">Réseaux</span>
+          <a href="https://www.linkedin.com/in/maxime-farineau-5a2b3b228/" class="footer__link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://github.com/maxfrn56" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span class="footer__copy">©2026 Maxime Farineau — Tous droits réservés</span>
+        <span class="tag-code footer__code">// while(alive) { build(); ship(); grow(); }</span>
+        <span class="footer__loc">Biarritz, France</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+       CONTACT MODAL
+  ═══════════════════════════════════════ -->
+  <div id="contact-modal" class="contact-modal" role="dialog" aria-modal="true" aria-label="Formulaire de contact" aria-hidden="true">
+
+    <div class="contact-modal__backdrop" id="contact-backdrop"></div>
+
+    <div class="contact-modal__inner">
+
+      <div class="contact-modal__shell">
+
+        <span class="contact-modal__corner contact-modal__corner--tl" aria-hidden="true"></span>
+        <span class="contact-modal__corner contact-modal__corner--tr" aria-hidden="true"></span>
+        <span class="contact-modal__corner contact-modal__corner--bl" aria-hidden="true"></span>
+        <span class="contact-modal__corner contact-modal__corner--br" aria-hidden="true"></span>
+
+        <div class="contact-modal__header contact-modal__top">
+          <div class="contact-modal__brand">
+            <span class="contact-modal__logo">CONTACT_SYS</span>
+            <span class="contact-modal__tab is-active">NEW_REQUEST</span>
+          </div>
+          <div class="contact-modal__meta">
+            <span class="contact-modal__live">
+              <span class="contact-modal__live-dot"></span>
+              LINK:OK
+            </span>
+            <span>REF <em>CONTACT_01</em></span>
+          </div>
+          <button class="contact-modal__close" id="contact-panel-close" aria-label="Fermer">
+            <span></span><span></span>
+          </button>
+        </div>
+
+        <div class="contact-modal__content contact-modal__body">
+
+          <aside class="contact-modal__left contact-modal__panel contact-modal__panel--left">
+            <div class="contact-modal__panel-bar">
+              <span>SYS_NAV</span>
+              <span class="contact-modal__ok">● OK</span>
+            </div>
+            <div class="contact-modal__panel-scroll">
+              <h2 class="contact-modal__title">ON<br><em>DISCUTE ?</em></h2>
+              <div class="contact-modal__info">
+                <span class="contact-modal__label">[ CHANNEL ]</span>
+                <a href="mailto:contact@maximefarineau.com" class="contact-modal__email">contact@maximefarineau.com</a>
+                <span class="contact-modal__loc">// Biarritz, France</span>
+                <div class="contact-modal__status">
+                  <span class="contact-modal__live-dot"></span>
+                  <span>STATUS: DISPONIBLE</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="contact-modal__right contact-modal__panel contact-modal__panel--form">
+            <div class="contact-modal__panel-bar">
+              <span>[ INPUT_FORM ]</span>
+              <span>QTY: 5</span>
+            </div>
+
+            <div class="contact-modal__form-wrap">
+
+              <form id="contact-form" class="contact-form" novalidate>
+
+                <div class="contact-form__row">
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-name">[ NOM * ]</label>
+                    <div class="contact-form__input-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <input class="contact-form__input" type="text" id="f-name" name="name" placeholder="Votre nom" required autocomplete="name" />
+                    </div>
+                  </div>
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-email">[ EMAIL * ]</label>
+                    <div class="contact-form__input-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <input class="contact-form__input" type="email" id="f-email" name="email" placeholder="votre@email.com" required autocomplete="email" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-form__row">
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-type">[ TYPE ]</label>
+                    <div class="contact-form__input-wrap contact-form__select-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <select class="contact-form__input contact-form__select" id="f-type" name="type">
+                        <option value="" disabled selected>Choisir…</option>
+                        <option value="Site Vitrine">Site Vitrine</option>
+                        <option value="E-Commerce">E-Commerce</option>
+                        <option value="Application Web">Application Web</option>
+                        <option value="Intégration IA">Intégration IA</option>
+                        <option value="API & Intégrations">API & Intégrations</option>
+                        <option value="SEO & Référencement">SEO & Référencement</option>
+                        <option value="UX/UI & Design">UX/UI & Design</option>
+                        <option value="Maintenance">Maintenance & évolution</option>
+                        <option value="Autre">Autre</option>
+                      </select>
+                      <span class="contact-form__select-arrow">▼</span>
+                    </div>
+                  </div>
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-budget">[ BUDGET ]</label>
+                    <div class="contact-form__input-wrap contact-form__select-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <select class="contact-form__input contact-form__select" id="f-budget" name="budget">
+                        <option value="" disabled selected>Fourchette…</option>
+                        <option value="< 2 000 €">Moins de 2 000 €</option>
+                        <option value="2 000 – 5 000 €">2 000 – 5 000 €</option>
+                        <option value="5 000 – 10 000 €">5 000 – 10 000 €</option>
+                        <option value="> 10 000 €">Plus de 10 000 €</option>
+                        <option value="À définir">À définir ensemble</option>
+                      </select>
+                      <span class="contact-form__select-arrow">▼</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-form__field">
+                  <label class="contact-form__label" for="f-message">[ MESSAGE * ]</label>
+                  <div class="contact-form__input-wrap contact-form__input-wrap--textarea">
+                    <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                    <textarea class="contact-form__input contact-form__textarea" id="f-message" name="message" placeholder="Décrivez votre projet…" rows="4" required></textarea>
+                  </div>
+                </div>
+
+                <div class="contact-form__submit-row">
+                  <button type="submit" class="contact-form__submit" id="contact-submit">
+                    <span class="contact-form__submit-text">ENVOYER</span>
+                    <span class="contact-form__submit-arrow">↗</span>
+                    <span class="contact-form__submit-loader" aria-hidden="true"></span>
+                  </button>
+                </div>
+
+              </form>
+
+              <div class="contact-panel__success" id="contact-success" aria-live="polite">
+                <div class="contact-panel__success-icon">✓</div>
+                <h3>TRANSMISSION OK</h3>
+                <p>Merci — je reviens vers vous sous 24h.</p>
+                <button class="contact-panel__success-back" id="contact-success-back">← RETOUR</button>
+              </div>
+
+              <div class="contact-panel__error" id="contact-error" aria-live="polite">
+                <span id="contact-error-msg">Une erreur est survenue. Réessayez.</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-modal__terminal" aria-hidden="true">
+          <div class="contact-modal__terminal-inner">
+            <span class="contact-modal__log">&gt; Establishing secure connection…</span>
+            <span class="contact-modal__log">&gt; Awaiting user input…</span>
+            <span class="contact-modal__log">&gt; Channel: contact@maximefarineau.com</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FLOATING PILL CTA
+  ═══════════════════════════════════════ -->
+  <div id="float-cta" class="float-cta" aria-hidden="true">
+    <button class="float-cta__btn" data-panel-trigger>
+      <span class="float-cta__dot"></span>
+      <span class="float-cta__label">Tell me about your idea</span>
+      <span class="float-cta__arrow">↗</span>
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FLOATING WORK PREVIEW (cursor follower)
+  ═══════════════════════════════════════ -->
+  <div id="work-preview-cursor" class="work-preview-cursor" aria-hidden="true">
+    <div class="work-preview-cursor__inner"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
+  <script src="js/projects-data.js"></script>
+  <script src="js/hero-previews.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/project-page.js"></script>
+  <script src="js/barba-init.js"></script>
+
+</body>
+</html>

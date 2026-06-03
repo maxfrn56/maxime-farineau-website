@@ -1,0 +1,159 @@
+  <div id="contact-modal" class="contact-modal" role="dialog" aria-modal="true" aria-label="Formulaire de contact" aria-hidden="true">
+
+    <div class="contact-modal__backdrop" id="contact-backdrop"></div>
+
+    <div class="contact-modal__inner">
+
+      <div class="contact-modal__shell">
+
+        <span class="contact-modal__corner contact-modal__corner--tl" aria-hidden="true"></span>
+        <span class="contact-modal__corner contact-modal__corner--tr" aria-hidden="true"></span>
+        <span class="contact-modal__corner contact-modal__corner--bl" aria-hidden="true"></span>
+        <span class="contact-modal__corner contact-modal__corner--br" aria-hidden="true"></span>
+
+        <div class="contact-modal__header contact-modal__top">
+          <div class="contact-modal__brand">
+            <span class="contact-modal__logo">CONTACT_SYS</span>
+            <span class="contact-modal__tab is-active">NEW_REQUEST</span>
+          </div>
+          <div class="contact-modal__meta">
+            <span class="contact-modal__live">
+              <span class="contact-modal__live-dot"></span>
+              LINK:OK
+            </span>
+            <span>REF <em>CONTACT_01</em></span>
+          </div>
+          <button class="contact-modal__close" id="contact-panel-close" aria-label="Fermer">
+            <span></span><span></span>
+          </button>
+        </div>
+
+        <div class="contact-modal__content contact-modal__body">
+
+          <aside class="contact-modal__left contact-modal__panel contact-modal__panel--left">
+            <div class="contact-modal__panel-bar">
+              <span>SYS_NAV</span>
+              <span class="contact-modal__ok">● OK</span>
+            </div>
+            <div class="contact-modal__panel-scroll">
+              <h2 class="contact-modal__title">ON<br><em>DISCUTE ?</em></h2>
+              <div class="contact-modal__info">
+                <span class="contact-modal__label">[ CHANNEL ]</span>
+                <a href="mailto:contact@maximefarineau.com" class="contact-modal__email">contact@maximefarineau.com</a>
+                <span class="contact-modal__loc">// Biarritz, France</span>
+                <div class="contact-modal__status">
+                  <span class="contact-modal__live-dot"></span>
+                  <span>STATUS: DISPONIBLE</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="contact-modal__right contact-modal__panel contact-modal__panel--form">
+            <div class="contact-modal__panel-bar">
+              <span>[ INPUT_FORM ]</span>
+              <span>QTY: 5</span>
+            </div>
+
+            <div class="contact-modal__form-wrap">
+
+              <form id="contact-form" class="contact-form" novalidate>
+
+                <div class="contact-form__row">
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-name">[ NOM * ]</label>
+                    <div class="contact-form__input-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <input class="contact-form__input" type="text" id="f-name" name="name" placeholder="Votre nom" required autocomplete="name" />
+                    </div>
+                  </div>
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-email">[ EMAIL * ]</label>
+                    <div class="contact-form__input-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <input class="contact-form__input" type="email" id="f-email" name="email" placeholder="votre@email.com" required autocomplete="email" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-form__row">
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-type">[ TYPE ]</label>
+                    <div class="contact-form__input-wrap contact-form__select-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <select class="contact-form__input contact-form__select" id="f-type" name="type">
+                        <option value="" disabled selected>Choisir…</option>
+                        <option value="Site Vitrine">Site Vitrine</option>
+                        <option value="E-Commerce">E-Commerce</option>
+                        <option value="Application Web">Application Web</option>
+                        <option value="Intégration IA">Intégration IA</option>
+                        <option value="API & Intégrations">API & Intégrations</option>
+                        <option value="SEO & Référencement">SEO & Référencement</option>
+                        <option value="UX/UI & Design">UX/UI & Design</option>
+                        <option value="Maintenance">Maintenance & évolution</option>
+                        <option value="Autre">Autre</option>
+                      </select>
+                      <span class="contact-form__select-arrow">▼</span>
+                    </div>
+                  </div>
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="f-budget">[ BUDGET ]</label>
+                    <div class="contact-form__input-wrap contact-form__select-wrap">
+                      <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                      <select class="contact-form__input contact-form__select" id="f-budget" name="budget">
+                        <option value="" disabled selected>Fourchette…</option>
+                        <option value="< 2 000 €">Moins de 2 000 €</option>
+                        <option value="2 000 – 5 000 €">2 000 – 5 000 €</option>
+                        <option value="5 000 – 10 000 €">5 000 – 10 000 €</option>
+                        <option value="> 10 000 €">Plus de 10 000 €</option>
+                        <option value="À définir">À définir ensemble</option>
+                      </select>
+                      <span class="contact-form__select-arrow">▼</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contact-form__field">
+                  <label class="contact-form__label" for="f-message">[ MESSAGE * ]</label>
+                  <div class="contact-form__input-wrap contact-form__input-wrap--textarea">
+                    <span class="contact-form__prompt" aria-hidden="true">&gt;</span>
+                    <textarea class="contact-form__input contact-form__textarea" id="f-message" name="message" placeholder="Décrivez votre projet…" rows="4" required></textarea>
+                  </div>
+                </div>
+
+                <div class="contact-form__submit-row">
+                  <button type="submit" class="contact-form__submit" id="contact-submit">
+                    <span class="contact-form__submit-text">ENVOYER</span>
+                    <span class="contact-form__submit-arrow">↗</span>
+                    <span class="contact-form__submit-loader" aria-hidden="true"></span>
+                  </button>
+                </div>
+
+              </form>
+
+              <div class="contact-panel__success" id="contact-success" aria-live="polite">
+                <div class="contact-panel__success-icon">✓</div>
+                <h3>TRANSMISSION OK</h3>
+                <p>Merci — je reviens vers vous sous 24h.</p>
+                <button class="contact-panel__success-back" id="contact-success-back">← RETOUR</button>
+              </div>
+
+              <div class="contact-panel__error" id="contact-error" aria-live="polite">
+                <span id="contact-error-msg">Une erreur est survenue. Réessayez.</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-modal__terminal" aria-hidden="true">
+          <div class="contact-modal__terminal-inner">
+            <span class="contact-modal__log">&gt; Establishing secure connection…</span>
+            <span class="contact-modal__log">&gt; Awaiting user input…</span>
+            <span class="contact-modal__log">&gt; Channel: contact@maximefarineau.com</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
