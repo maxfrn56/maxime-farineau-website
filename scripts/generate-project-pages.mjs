@@ -7,6 +7,7 @@ const root = join(__dir, '..');
 
 const dataSrc = readFileSync(join(root, 'js/projects-data.js'), 'utf8');
 const contactModal = readFileSync(join(root, 'partials/contact-modal.html'), 'utf8');
+const faviconProject = readFileSync(join(root, 'partials/favicon-project.html'), 'utf8');
 const orderMatch = dataSrc.match(/window\.MF_PROJECT_ORDER = (\[[\s\S]*?\]);/);
 const order = orderMatch ? eval(orderMatch[1]) : [];
 
@@ -44,7 +45,7 @@ function page(slug, p) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="${p.title} — Projet par Maxime Farineau" />
   <title>${p.title} — Maxime Farineau</title>
-  <link rel="stylesheet" href="../css/style.css" />
+${faviconProject}  <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/project.css" />
 </head>
 <body class="page-project" data-theme="dark" data-barba="wrapper" style="--project-accent: ${p.accent}">
