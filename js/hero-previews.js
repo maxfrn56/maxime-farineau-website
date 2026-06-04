@@ -31,7 +31,7 @@
     const isActive = idx === 0;
 
     const stageMedia = src
-      ? `<video class="hero-cmd-mini__video" muted loop playsinline preload="metadata" src="${src}" aria-hidden="true"></video>`
+      ? `<video class="hero-cmd-mini__video" muted loop playsinline preload="none" data-src="${src}" aria-hidden="true"></video>`
       : `<div class="hero-cmd-mini__placeholder" aria-hidden="true"></div>`;
 
     return `
@@ -108,6 +108,7 @@
               </div>
             </div>
           </div>
+          <span class="hero__name-card-hover-title" aria-hidden="true">${p.title}</span>
           <span class="hero__name-card-cta">Voir le projet</span>
         </a>
       </div>`;
@@ -115,12 +116,41 @@
 
   mount.innerHTML = order.map(buildCard).join('');
 
+  function unloadVideo(video) {
+    if (!video?.dataset?.src) return;
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    video.classList.remove('is-video-failed');
+  }
+
+  function ensureVideoSrc(video) {
+    const src = video?.dataset?.src;
+    if (!src) return;
+    if (video.getAttribute('src') === src) return;
+    video.src = src;
+    video.load();
+  }
+
   function syncPreviewVideos() {
     mount.querySelectorAll('.hero-cmd-mini__video').forEach((v) => {
-      v.pause();
+      const card = v.closest('.hero__name-card');
+      if (!card?.classList.contains('is-active')) unloadVideo(v);
     });
+
     const active = mount.querySelector('.hero__name-card.is-active .hero-cmd-mini__video');
-    if (active) active.play().catch(() => {});
+    if (!active) return;
+
+    ensureVideoSrc(active);
+    active.addEventListener(
+      'error',
+      () => {
+        active.classList.add('is-video-failed');
+        unloadVideo(active);
+      },
+      { once: true }
+    );
+    active.play().catch(() => {});
   }
 
   document.addEventListener('hero-card-change', syncPreviewVideos);
@@ -131,11 +161,22 @@
     mount.querySelectorAll('.hero-cmd-mini__video').forEach((v) => v.pause());
   });
 
+  mount.addEventListener(
+    'pointerenter',
+    (e) => {
+      const card = e.target.closest('.hero__name-card');
+      if (!card) return;
+      const video = card.querySelector('.hero-cmd-mini__video');
+      if (video) ensureVideoSrc(video);
+    },
+    true
+  );
+
   if (hero && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
             mount.querySelectorAll('.hero-cmd-mini__video').forEach((v) => v.pause());
           } else {
             syncPreviewVideos();

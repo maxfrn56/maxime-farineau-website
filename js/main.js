@@ -131,9 +131,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.remove('is-preloading');
 
     let heroStarted = false;
-    const startHero = () => {
+    const startHero = async () => {
       if (heroStarted) return;
       heroStarted = true;
+      await whenFontsReady();
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      });
+      refitHeroLayout();
       playHeroEntrance();
     };
 
@@ -150,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
       duration: 0.28,
       stagger: 0.04,
       ease: 'power2.in',
-      onStart: startHero,
     })
     .to(preloader, {
       yPercent: -100,
@@ -232,8 +236,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function whenFontsReady() {
+    return document.fonts?.ready ?? Promise.resolve();
+  }
+
+  function measureHeroInitScale() {
+    if (!isDesktop || !heroTitleWrap || !heroTitleEl) return 1;
+    const wrapLeft = heroTitleWrap.getBoundingClientRect().left;
+    let maxTextW = 0;
+    document.querySelectorAll('.hero__line[data-split]').forEach((ln) => {
+      const prev = ln.style.display;
+      ln.style.display = 'inline-block';
+      maxTextW = Math.max(maxTextW, ln.getBoundingClientRect().width);
+      ln.style.display = prev || '';
+    });
+    if (!maxTextW) maxTextW = heroTitleWrap.getBoundingClientRect().width;
+    return Math.min((window.innerWidth - wrapLeft) / maxTextW, 2.2) * 0.94;
+  }
+
+  function applyHeroInitScale() {
+    heroInitScale = measureHeroInitScale();
+    if (isDesktop && heroTitleEl) {
+      gsap.set(heroTitleEl, {
+        scale: heroInitScale,
+        transformOrigin: 'left center',
+      });
+    }
+  }
+
+  function refitHeroLayout() {
+    fitHeroName();
+    applyHeroInitScale();
+    ScrollTrigger.refresh();
+  }
+
   fitHeroName();
-  window.addEventListener('resize', fitHeroName);
+  window.addEventListener('resize', () => refitHeroLayout());
 
   if (heroNameEls.length) {
     heroNameEls.forEach(el => {
@@ -250,26 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroTitleWrap = document.querySelector('.hero__title-wrap');
   let heroInitScale = 1;
 
-  if (isDesktop && heroTitleWrap && heroTitleEl) {
-    const wrapLeft = heroTitleWrap.getBoundingClientRect().left;
-
-    // Mesure la vraie largeur de chaque ligne (inline-block = largeur réelle du texte)
-    let maxTextW = 0;
-    document.querySelectorAll('.hero__line[data-split]').forEach(ln => {
-      const prev = ln.style.display;
-      ln.style.display = 'inline-block';
-      maxTextW = Math.max(maxTextW, ln.getBoundingClientRect().width);
-      ln.style.display = prev || '';
-    });
-    if (!maxTextW) maxTextW = heroTitleWrap.getBoundingClientRect().width;
-
-    // Scale pour que la plus longue ligne remplisse le viewport, avec marge de sécurité
-    heroInitScale = Math.min((window.innerWidth - wrapLeft) / maxTextW, 2.2) * 0.94;
-    gsap.set(heroTitleEl, {
-      scale: heroInitScale,
-      transformOrigin: 'left center',
-    });
-  }
+  applyHeroInitScale();
+  whenFontsReady().then(() => refitHeroLayout());
 
   /* ── Hero preview : zoom au survol ── */
   (function initHeroImgHover() {
@@ -317,7 +337,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function playHeroEntrance() {
     resetHomeScroll();
-    const tl = gsap.timeline({ onComplete: initScrollWorld });
+    const tl = gsap.timeline({
+      onComplete() {
+        initScrollWorld();
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+      },
+    });
 
     // Phase 1 — nav apparaît, chars montent dans le GRAND titre
     tl.to('#nav', { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' })
@@ -1130,7 +1155,8 @@ document.addEventListener('DOMContentLoaded', () => {
       heroNameImg.classList.add('is-revealed');
     }
 
-    if (typeof fitHeroName === 'function') fitHeroName();
+    if (typeof refitHeroLayout === 'function') refitHeroLayout();
+    else if (typeof fitHeroName === 'function') fitHeroName();
 
     if (resumeOnly && container.dataset.mfScrollReady === '1') {
       window.MF?.resumeHome?.();
@@ -1349,7 +1375,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (skipPreloader) {
-    initHomeFromBarba();
+    whenFontsReady().then(() => {
+      refitHeroLayout();
+      initHomeFromBarba();
+    });
   }
 
   window.MF = window.MF || {};

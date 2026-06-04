@@ -91,7 +91,19 @@ app.get('/health', (_, res) => {
 });
 
 /* Fichiers statiques (portfolio) */
-app.use(express.static(ROOT, { index: 'index.html', extensions: ['html'] }));
+app.use(
+  express.static(ROOT, {
+    index: 'index.html',
+    extensions: ['html'],
+    setHeaders(res, filePath) {
+      if (filePath.endsWith('.mp4')) {
+        res.setHeader('Content-Type', 'video/mp4');
+        res.setHeader('Accept-Ranges', 'bytes');
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+    },
+  })
+);
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✓ Portfolio + contact → http://0.0.0.0:${PORT}`);

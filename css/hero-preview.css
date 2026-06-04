@@ -358,6 +358,11 @@
   z-index: 1;
 }
 
+.hero-cmd-mini__video.is-video-failed {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .hero-cmd-mini__placeholder {
   position: absolute;
   inset: 0;
@@ -422,6 +427,37 @@
   overflow: hidden;
 }
 
+/* ── Titre projet (visible au hover agrandi uniquement) ── */
+.hero__name-card-hover-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 28%;
+  z-index: 6;
+  margin: 0;
+  padding: 0 10px;
+  font-family: var(--ff-heading, 'ClashDisplay', sans-serif);
+  font-weight: 700;
+  font-size: clamp(10px, 1.15vw, 14px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-align: center;
+  color: #f0ede6;
+  text-transform: none;
+  opacity: 0;
+  pointer-events: none;
+  text-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.9),
+    0 0 32px rgba(0, 0, 0, 0.65);
+  transition: opacity 0.4s var(--ease-out-expo, ease), transform 0.5s var(--ease-out-expo, ease);
+  transform: translateY(6px);
+}
+
+.section--hero.is-img-hover .hero__name-card--preview.is-active .hero__name-card-hover-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── CTA overlay ── */
 .hero__name-card--preview .hero__name-card-cta {
   position: absolute;
@@ -438,7 +474,6 @@
   transition: opacity 0.35s var(--ease-out-expo, ease), color 0.3s ease;
 }
 
-.section--hero.is-img-hover .hero__name-card--preview.is-active .hero__name-card-cta,
-.hero__name-card--preview.is-active .hero__name-card-link:hover .hero__name-card-cta {
+.section--hero.is-img-hover .hero__name-card--preview.is-active .hero__name-card-cta {
   opacity: 1;
 }

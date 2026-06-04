@@ -136,13 +136,40 @@
     root.__videoResizeObs.observe(wrap);
   }
 
+  function resolveVideoSrc(src) {
+    if (!src) return '';
+    if (/^https?:\/\//i.test(src) || src.startsWith('/')) return src;
+    try {
+      return new URL(src, window.location.href).href;
+    } catch {
+      return src;
+    }
+  }
+
   function loadVideo(root) {
     const video = root.querySelector('.js-project-video');
     if (!video) return;
-    const src = video.getAttribute('data-src');
-    if (!src) return;
+    const rawSrc = video.getAttribute('data-src');
+    if (!rawSrc) return;
 
+    const src = resolveVideoSrc(rawSrc);
+    let retried = false;
+
+    const onFail = () => {
+      if (!retried) {
+        retried = true;
+        video.load();
+        return;
+      }
+      root.classList.remove('has-video');
+      root.__videoResizeObs?.disconnect();
+      root.__videoResizeObs = null;
+    };
+
+    let ready = false;
     const onReady = () => {
+      if (ready) return;
+      ready = true;
       root.classList.add('has-video');
       fitVideoFrame(root);
       video.play().catch(() => {});
@@ -150,9 +177,15 @@
 
     video.addEventListener('loadedmetadata', onReady, { once: true });
     video.addEventListener('error', () => {
-      root.classList.remove('has-video');
-      root.__videoResizeObs?.disconnect();
-      root.__videoResizeObs = null;
+      if (!retried) {
+        retried = true;
+        ready = false;
+        video.addEventListener('loadedmetadata', onReady, { once: true });
+        video.addEventListener('error', onFail, { once: true });
+        video.load();
+        return;
+      }
+      onFail();
     }, { once: true });
 
     if (video.src !== src) {
