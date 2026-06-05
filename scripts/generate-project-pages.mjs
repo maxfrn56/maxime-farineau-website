@@ -8,6 +8,8 @@ const root = join(__dir, '..');
 const dataSrc = readFileSync(join(root, 'js/projects-data.js'), 'utf8');
 const contactModal = readFileSync(join(root, 'partials/contact-modal.html'), 'utf8');
 const faviconProject = readFileSync(join(root, 'partials/favicon-project.html'), 'utf8');
+const gtmHead = readFileSync(join(root, 'partials/gtm-head.html'), 'utf8');
+const gtmBody = readFileSync(join(root, 'partials/gtm-body.html'), 'utf8');
 const orderMatch = dataSrc.match(/window\.MF_PROJECT_ORDER = (\[[\s\S]*?\]);/);
 const order = orderMatch ? eval(orderMatch[1]) : [];
 
@@ -101,7 +103,7 @@ function page(slug, p) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+${gtmHead}  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 ${seoHead({ pageTitle, description: metaDesc, canonicalPath: `/projets/${slug}.html` })}
 ${faviconProject}${projectJsonLd(slug, p)}
@@ -109,7 +111,7 @@ ${faviconProject}${projectJsonLd(slug, p)}
   <link rel="stylesheet" href="../css/project.css" />
 </head>
 <body class="page-project" data-theme="dark" data-barba="wrapper" style="--project-accent: ${p.accent}">
-
+${gtmBody}
   <div class="grain" aria-hidden="true"></div>
 
   <div id="barba-transition" class="barba-transition" aria-hidden="true">

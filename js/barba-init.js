@@ -192,10 +192,20 @@
     if (data.next.namespace === 'project') ensureProjectCss();
   });
 
+  function pushGtmPageView() {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'virtual_page_view',
+      page_path: window.location.pathname + window.location.search,
+      page_title: document.title,
+    });
+  }
+
   barba.hooks.afterEnter((data) => {
     if (data.next.namespace === 'home') {
       window.MF?.revealHomeAfterBarba?.({ scrollToTop: false });
     }
+    pushGtmPageView();
     ScrollTrigger.refresh(true);
   });
 
