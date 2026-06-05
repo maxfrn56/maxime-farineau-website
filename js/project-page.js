@@ -5,6 +5,20 @@
   let enterTl = null;
   let terminalIv = null;
 
+  function getProjectRoot(container) {
+    if (container?.classList?.contains('project-cmd')) return container;
+    if (container?.querySelector) {
+      const nested = container.querySelector('.project-cmd');
+      if (nested) return nested;
+    }
+    const active = window.MF?.getActiveBarbaContainer?.('project');
+    if (active) {
+      const root = active.querySelector('.project-cmd');
+      if (root) return root;
+    }
+    return document.querySelector('.project-cmd');
+  }
+
   function formatMetric(el, value) {
     el.textContent = `${el.dataset.prefix || ''}${value}${el.dataset.suffix || ''}`;
   }
@@ -146,21 +160,29 @@
     }
   }
 
+  function resetVideo(root) {
+    const video = root.querySelector('.js-project-video');
+    if (!video) return;
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    root.classList.remove('has-video');
+    root.__videoResizeObs?.disconnect();
+    root.__videoResizeObs = null;
+  }
+
   function loadVideo(root) {
     const video = root.querySelector('.js-project-video');
     if (!video) return;
     const rawSrc = video.getAttribute('data-src');
     if (!rawSrc) return;
 
+    resetVideo(root);
+
     const src = resolveVideoSrc(rawSrc);
     let retried = false;
 
     const onFail = () => {
-      if (!retried) {
-        retried = true;
-        video.load();
-        return;
-      }
       root.classList.remove('has-video');
       root.__videoResizeObs?.disconnect();
       root.__videoResizeObs = null;
@@ -188,12 +210,8 @@
       onFail();
     }, { once: true });
 
-    if (video.src !== src) {
-      video.src = src;
-      video.load();
-    } else if (video.readyState >= 1) {
-      onReady();
-    }
+    video.src = src;
+    video.load();
   }
 
   function runCounts(root) {
@@ -262,23 +280,31 @@
     window.scrollTo(0, 0);
   }
 
-  function destroyProject() {
+  function cleanupProjectRoot(root) {
+    if (!root) return;
+    root.__videoResizeObs?.disconnect();
+    root.__videoResizeObs = null;
+    root.classList.remove('is-ready', 'has-video');
+    resetVideo(root);
+    gsap.killTweensOf(root.querySelectorAll('.project-cmd__panel, .project-cmd__viewport, .project-cmd__terminal, .project-cmd__metric, .project-cmd__task, .project-cmd__dir'));
+  }
+
+  function destroyProject(container) {
     projectReady = false;
     enterTl?.kill();
     enterTl = null;
     if (terminalIv) clearInterval(terminalIv);
     terminalIv = null;
-    document.querySelectorAll('.project-cmd').forEach((root) => {
-      root.__videoResizeObs?.disconnect();
-      root.__videoResizeObs = null;
-    });
-    document.querySelectorAll('.js-project-video').forEach((v) => v.pause());
+
+    const root = getProjectRoot(container);
+    if (root) cleanupProjectRoot(root);
+
     window.MF?.killProjectScroll?.();
     document.documentElement.classList.remove('is-project-view');
   }
 
-  function initProjectPage() {
-    const root = document.querySelector('.project-cmd');
+  function initProjectPage(container) {
+    const root = getProjectRoot(container);
     if (!root) return;
 
     const data = window.PROJECTS?.[root.dataset.project];
@@ -286,6 +312,7 @@
 
     projectReady = true;
     lockViewport();
+    root.classList.remove('is-ready');
     populateContent(root, data);
     loadVideo(root);
 
@@ -301,15 +328,18 @@
   window.MF.destroyProject = destroyProject;
 
   document.addEventListener('DOMContentLoaded', () => {
-    if (document.querySelector('[data-barba-namespace="project"]')) initProjectPage();
+    const container = document.querySelector('[data-barba-namespace="project"]');
+    if (container) initProjectPage(container);
   });
 
   window.addEventListener('mf:page-enter', (e) => {
     if (e.detail?.namespace === 'project') {
       projectReady = false;
-      initProjectPage();
+      initProjectPage(e.detail.container);
     }
   });
 
-  window.addEventListener('mf:page-leave', destroyProject);
+  window.addEventListener('mf:page-leave', (e) => {
+    destroyProject(e.detail?.container);
+  });
 })();

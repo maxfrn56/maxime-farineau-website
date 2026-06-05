@@ -536,7 +536,19 @@ document.addEventListener('DOMContentLoaded', () => {
     runLoop();
   }
 
+  let homeScrollWorldInit = false;
+
   function initScrollWorld() {
+    ScrollTrigger.enable();
+    window.__mfLenis?.start();
+
+    if (homeScrollWorldInit) {
+      resetHomeScroll();
+      ScrollTrigger.refresh();
+      return;
+    }
+    homeScrollWorldInit = true;
+
     resetHomeScroll();
 
     /* ── Nav scrolled state ── */
@@ -1114,8 +1126,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Home sans préloader (Barba ou retour rapide) ── */
   function initHomeFromBarba({ resumeOnly = false, scrollToTop = false } = {}) {
-    const container = document.querySelector('[data-barba-namespace="home"]');
+    const container =
+      window.MF?.getActiveBarbaContainer?.('home') ||
+      document.querySelector('[data-barba-namespace="home"]');
     if (!container) return;
+
+    ScrollTrigger.enable();
+    window.__mfLenis?.start();
 
     if (scrollToTop) {
       window.__mfHomeScroll = 0;
