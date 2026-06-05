@@ -24,6 +24,18 @@
     );
   }
 
+  function isHomeNavigationHref(href) {
+    if (!href) return false;
+    const path = href.split('#')[0].replace(/^\.\//, '').replace(/^\.\.\//, '');
+    return (
+      path === '' ||
+      path === '/' ||
+      path === 'index.html' ||
+      path.endsWith('/index.html') ||
+      path.endsWith('/index')
+    );
+  }
+
   window.MF = window.MF || {};
   window.MF.getActiveBarbaContainer = getActiveBarbaContainer;
 
@@ -39,15 +51,7 @@
   function isHomeTopLink(el) {
     if (!el?.getAttribute) return false;
     const href = el.getAttribute('href') || '';
-    const path = href.split('#')[0].replace(/^\.\//, '').replace(/^\.\.\//, '');
-    const isHome = (
-      path === '' ||
-      path === '/' ||
-      path === 'index.html' ||
-      path.endsWith('/index.html') ||
-      path.endsWith('/index')
-    );
-    if (!isHome) return false;
+    if (!isHomeNavigationHref(href)) return false;
     return (
       el.classList.contains('nav__logo') ||
       el.classList.contains('footer__brand') ||
@@ -91,7 +95,7 @@
         duration: resumeOnly ? 0.5 : 0.6,
         ease: 'power2.out',
         onComplete() {
-          window.MF?.restoreHomeEnvironment?.({ scrollToTop });
+          window.MF?.revealHomeAfterBarba?.({ scrollToTop });
           ScrollTrigger.refresh(true);
           ScrollTrigger.update();
           window.dispatchEvent(
@@ -105,6 +109,22 @@
   barba.init({
     preventRunning: true,
     cacheIgnore: false,
+    /* Depuis un projet : rechargement complet vers l’accueil (évite l’état Barba cassé) */
+    prevent({ el }) {
+      if (!document.body.classList.contains('page-project')) return false;
+      const link = el.closest?.('a');
+      if (!link) return false;
+      if (!isHomeNavigationHref(link.getAttribute('href'))) return false;
+      window.dispatchEvent(
+        new CustomEvent('mf:page-leave', {
+          detail: {
+            namespace: 'project',
+            container: getActiveBarbaContainer('project'),
+          },
+        })
+      );
+      return true;
+    },
     transitions: [
       {
         name: 'home-to-project',
@@ -170,6 +190,13 @@
   barba.hooks.beforeEnter((data) => {
     setBodyPage(data.next.namespace);
     if (data.next.namespace === 'project') ensureProjectCss();
+  });
+
+  barba.hooks.afterEnter((data) => {
+    if (data.next.namespace === 'home') {
+      window.MF?.revealHomeAfterBarba?.({ scrollToTop: false });
+    }
+    ScrollTrigger.refresh(true);
   });
 
   barba.hooks.after(() => {

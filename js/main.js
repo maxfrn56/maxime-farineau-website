@@ -538,17 +538,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let homeScrollWorldInit = false;
 
-  function restoreHomeEnvironment({ scrollToTop = false } = {}) {
-    document.documentElement.classList.remove('is-project-view');
-    document.body.style.removeProperty('--project-accent');
-    document.getElementById('nav')?.classList.remove('is-scrolled');
+  function revealHomeAfterBarba({ scrollToTop = false } = {}) {
+    const container =
+      window.MF?.getActiveBarbaContainer?.('home') ||
+      document.querySelector('[data-barba-namespace="home"]');
+    if (!container) return;
 
-    ScrollTrigger.enable();
-    window.__mfLenis?.start();
+    gsap.set(container, { opacity: 1, y: 0, visibility: 'visible', clearProps: 'transform' });
+    gsap.set('#nav', { opacity: 1, y: 0, clearProps: 'transform' });
+
+    const reveal = (sel, props) => {
+      container.querySelectorAll(sel).forEach((el) => gsap.set(el, props));
+    };
+
+    reveal('.hero__line .char, .js-hero-name .char', { opacity: 1, y: 0, yPercent: 0, clearProps: 'transform' });
+    reveal('.js-reveal-title .char', { opacity: 1, yPercent: 0, clearProps: 'transform' });
+    reveal('.section__meta', { opacity: 1, y: 0, clearProps: 'transform' });
+    reveal('.statement__word', { opacity: 1, y: 0, clearProps: 'transform' });
+    reveal('.about__statement', { opacity: 1, y: 0, clearProps: 'transform' });
+    reveal('.cta-wide', { opacity: 1, y: 0, clearProps: 'transform' });
+    reveal('.code-block', { opacity: 1, x: 0, clearProps: 'transform' });
+    reveal('.contact__footer', { opacity: 1, y: 0, clearProps: 'transform' });
+
+    gsap.set(container.querySelectorAll('.hero__tag, .hero__footer, .hero__location, .hero__intro'), {
+      opacity: 1, x: 0, y: 0, clearProps: 'transform',
+    });
+
+    const heroTitle = container.querySelector('.hero__title');
+    if (heroTitle) gsap.set(heroTitle, { opacity: 1, scale: 1, clearProps: 'transform' });
+
+    const heroNameImg = container.querySelector('.js-hero-name-imgs');
+    if (heroNameImg) {
+      gsap.set(heroNameImg, { opacity: 1, scale: 1, clearProps: 'transform' });
+      heroNameImg.classList.add('is-revealed');
+    }
+
+    const consoleEl = container.querySelector('#services-console');
+    if (consoleEl) gsap.set(consoleEl, { opacity: 1, y: 0, clearProps: 'transform' });
+
+    const worksMount = container.querySelector('#roulette-preview');
+    if (worksMount && !worksMount.children.length) {
+      window.MF?.rebuildWorksCards?.(worksMount);
+    }
 
     if (scrollToTop) {
-      window.__mfHomeScroll = 0;
-      resetHomeScroll();
       gsap.killTweensOf(document.body);
       document.body.setAttribute('data-theme', 'dark');
       gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
@@ -558,6 +591,24 @@ document.addEventListener('DOMContentLoaded', () => {
       ScrollTrigger.refresh(true);
       ScrollTrigger.update();
     });
+  }
+
+  function restoreHomeEnvironment({ scrollToTop = false } = {}) {
+    document.documentElement.classList.remove('is-project-view');
+    document.body.style.removeProperty('--project-accent');
+    document.body.classList.remove('page-project');
+    document.body.classList.add('page-home');
+    document.getElementById('nav')?.classList.remove('is-scrolled');
+
+    ScrollTrigger.enable();
+    window.__mfLenis?.start();
+
+    if (scrollToTop) {
+      window.__mfHomeScroll = 0;
+      resetHomeScroll();
+    }
+
+    revealHomeAfterBarba({ scrollToTop });
   }
 
   function initScrollWorld() {
@@ -1424,6 +1475,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.MF.initHomeFromBarba = initHomeFromBarba;
   window.MF.initScrollWorld = initScrollWorld;
   window.MF.restoreHomeEnvironment = restoreHomeEnvironment;
+  window.MF.revealHomeAfterBarba = revealHomeAfterBarba;
   window.MF.scrollHomeToTop = function scrollHomeToTop() {
     window.__mfHomeScroll = 0;
     const l = window.__mfLenis;

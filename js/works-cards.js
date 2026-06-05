@@ -1,6 +1,6 @@
 /* Works — cartes preview style pages projet (command center) */
-(function initWorksCards() {
-  const mount = document.getElementById('roulette-preview');
+function buildWorksCards(mountEl) {
+  const mount = mountEl || document.getElementById('roulette-preview');
   const order = window.MF_PROJECT_ORDER || Object.keys(window.PROJECTS || {});
   if (!mount || !order.length || !window.PROJECTS) return;
 
@@ -122,4 +122,9 @@
   }
 
   mount.innerHTML = order.map(buildCard).join('');
-})();
+}
+
+buildWorksCards();
+
+window.MF = window.MF || {};
+window.MF.rebuildWorksCards = buildWorksCards;
