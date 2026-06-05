@@ -31,26 +31,80 @@ document.addEventListener('DOMContentLoaded', () => {
      GSAP SETUP
   ══════════════════════════════════════════════════ */
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+
+  const MOBILE_MQ = window.matchMedia('(max-width: 768px), (pointer: coarse)');
+
+  function shouldUseNativeScroll() {
+    return MOBILE_MQ.matches;
+  }
+
+  function createNativeScrollController() {
+    let scrollY = window.scrollY;
+    const listeners = [];
+
+    const api = {
+      get scroll() { return scrollY; },
+      start() {},
+      stop() {},
+      raf() {},
+      on(event, cb) {
+        if (event === 'scroll') listeners.push(cb);
+      },
+      scrollTo(target, opts = {}) {
+        const offset = opts.offset ?? 0;
+        const immediate = opts.immediate;
+        let top = 0;
+
+        if (typeof target === 'number') {
+          top = target;
+        } else if (target instanceof Element) {
+          top = target.getBoundingClientRect().top + window.scrollY + offset;
+        }
+
+        top = Math.max(0, top);
+        window.scrollTo({ top, behavior: immediate ? 'auto' : 'smooth' });
+
+        if (immediate) {
+          scrollY = top;
+          listeners.forEach((cb) => cb({ scroll: scrollY }));
+          ScrollTrigger.update();
+        }
+      },
+    };
+
+    window.addEventListener('scroll', () => {
+      scrollY = window.scrollY;
+      listeners.forEach((cb) => cb({ scroll: scrollY }));
+      ScrollTrigger.update();
+    }, { passive: true });
+
+    return api;
+  }
 
   /* ══════════════════════════════════════════════════
-     LENIS SMOOTH SCROLL
+     LENIS SMOOTH SCROLL (desktop) / scroll natif (mobile)
   ══════════════════════════════════════════════════ */
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-    smoothTouch: false,
-    touchMultiplier: 2,
-  });
+  const useNativeScroll = shouldUseNativeScroll();
+  const lenis = useNativeScroll
+    ? createNativeScrollController()
+    : new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+        smoothTouch: false,
+        touchMultiplier: 2,
+      });
 
   window.__mfLenis = lenis;
 
-  lenis.on('scroll', ScrollTrigger.update);
-
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-  gsap.ticker.lagSmoothing(0);
+  if (!useNativeScroll) {
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+  }
 
   if (!isHomePage()) {
     lenis.stop();
@@ -806,27 +860,29 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     })();
 
-    /* ── Hero parallax ── */
-    gsap.to('.hero__title', {
-      yPercent: -15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end:   'bottom top',
-        scrub: 1.5,
-      },
-    });
-    gsap.to('.hero__tag', {
-      yPercent: -25,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end:   'bottom top',
-        scrub: 1.5,
-      },
-    });
+    /* ── Hero parallax (desktop — scrub désactivé sur mobile) ── */
+    if (!shouldUseNativeScroll()) {
+      gsap.to('.hero__title', {
+        yPercent: -15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end:   'bottom top',
+          scrub: 1.5,
+        },
+      });
+      gsap.to('.hero__tag', {
+        yPercent: -25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end:   'bottom top',
+          scrub: 1.5,
+        },
+      });
+    }
 
     /* ── Section meta tags ── */
     document.querySelectorAll('.section__meta').forEach(el => {
@@ -988,6 +1044,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const N = items.length;
       if (!track || !N) return;
 
+      let activeIdx = -1;
+
+      function switchCard(idx) {
+        if (idx === activeIdx) return;
+        cards.forEach((c) => c.classList.remove('is-active'));
+        items.forEach((it) => it.classList.remove('is-active'));
+        const card = document.querySelector(`.roulette__card[data-idx="${idx}"]`);
+        if (card) card.classList.add('is-active');
+        items[idx] && items[idx].classList.add('is-active');
+        if (counter) counter.textContent = String(idx + 1).padStart(2, '0');
+        activeIdx = idx;
+      }
+
+      if (shouldUseNativeScroll()) {
+        gsap.set(track, { clearProps: 'transform' });
+        items.forEach((item) => gsap.set(item, { clearProps: 'transform,opacity' }));
+        switchCard(0);
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const idx = Number(entry.target.dataset.idx);
+            if (!Number.isNaN(idx)) switchCard(idx);
+          });
+        }, {
+          root: null,
+          threshold: 0.55,
+          rootMargin: '-35% 0px -35% 0px',
+        });
+
+        items.forEach((item) => observer.observe(item));
+        return;
+      }
+
       const ITEM_H = items[0].getBoundingClientRect().height;
 
       function getSlot(progress) {
@@ -1000,8 +1090,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return center - slot * ITEM_H;
       }
 
-      let activeIdx = -1;
-
       function styleItems(slot) {
         items.forEach((item, i) => {
           const dist = i - slot;
@@ -1013,17 +1101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      function switchCard(idx) {
-        if (idx === activeIdx) return;
-        cards.forEach(c => c.classList.remove('is-active'));
-        items.forEach(it => it.classList.remove('is-active'));
-        const card = document.querySelector(`.roulette__card[data-idx="${idx}"]`);
-        if (card) card.classList.add('is-active');
-        items[idx] && items[idx].classList.add('is-active');
-        if (counter) counter.textContent = String(idx + 1).padStart(2, '0');
-        activeIdx = idx;
-      }
-
       gsap.set(track, { y: getTrackY(0) });
       styleItems(0);
       switchCard(0);
@@ -1033,8 +1110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         start: 'top top',
         end:   `+=${(N - 1) * 70}%`,
         pin:   true,
+        anticipatePin: 1,
         scrub: 0.8,
-        onUpdate: self => {
+        onUpdate: (self) => {
           const slot = getSlot(self.progress);
           const y    = getTrackY(slot);
           gsap.to(track, { y, duration: 0.4, ease: 'power2.out', overwrite: true });

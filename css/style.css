@@ -1002,6 +1002,10 @@ body[data-theme="light"] {
   transform-origin: left center;
   will-change: opacity, transform;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .roulette__item.is-active {
@@ -1075,6 +1079,10 @@ body[data-theme="light"] {
 
 /* Responsive roulette */
 @media (max-width: 768px) {
+  .section--works-roulette {
+    padding-bottom: clamp(32px, 8vw, 64px);
+  }
+
   .roulette {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -1085,13 +1093,22 @@ body[data-theme="light"] {
   .roulette__left {
     -webkit-mask-image: none;
     mask-image: none;
+    overflow: visible;
+  }
+  .roulette__track {
+    transform: none !important;
   }
   .roulette__item {
-    opacity: 0.5;
+    opacity: 0.55;
     min-width: 0;
+    transform: none !important;
+    min-height: 52px;
   }
   .roulette__item.is-active {
     opacity: 1;
+  }
+  .roulette__item:active {
+    opacity: 0.85;
   }
   .roulette__year {
     padding-right: 0;
