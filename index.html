@@ -21,6 +21,7 @@
   </script>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/hero-preview.css" />
+  <link rel="stylesheet" href="css/works-cmd.css" />
   <link rel="stylesheet" href="css/project.css" id="project-css" />
 </head>
 <body class="page-home" data-barba="wrapper">
@@ -288,74 +289,7 @@
         </div>
 
         <div class="roulette__right">
-          <div class="roulette__preview" id="roulette-preview">
-
-            <div class="roulette__card roulette__card--saline" data-idx="0" style="background:#0B1A0E;">
-              <div class="roulette__card-noise"></div>
-              <div class="roulette__card-logo-wrap" aria-hidden="true">
-                <img class="roulette__card-logo" src="assets/hero/saline-logo.png" alt="" width="200" height="200" />
-              </div>
-              <div class="roulette__card-inner">
-                <span class="roulette__card-label">Restaurant · Site Vitrine</span>
-                <h3 class="roulette__card-title">Saline<br>Céviché</h3>
-                <p class="roulette__card-desc">Expérience digitale immersive pour un restaurant de cuisine marine à Biarritz.</p>
-                <a href="projets/saline-ceviche.html" class="roulette__card-link js-project-link" data-project-transition="saline-ceviche"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
-              </div>
-            </div>
-
-            <div class="roulette__card roulette__card--cap-nage" data-idx="1" style="background:#0A1220;">
-              <div class="roulette__card-noise"></div>
-              <div class="roulette__card-logo-wrap" aria-hidden="true">
-                <img class="roulette__card-logo" src="assets/hero/cap-nage-logo.png" alt="" width="200" height="200" />
-              </div>
-              <div class="roulette__card-inner">
-                <span class="roulette__card-label">Sport & Bien-être · Web App</span>
-                <h3 class="roulette__card-title">Cap'<br>Nage</h3>
-                <p class="roulette__card-desc">Plateforme de réservation en ligne pour une école de natation du littoral basque.</p>
-                <a href="projets/cap-nage.html" class="roulette__card-link js-project-link" data-project-transition="cap-nage"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
-              </div>
-            </div>
-
-            <div class="roulette__card roulette__card--simply-leads" data-idx="2" style="background:#160E1E;">
-              <div class="roulette__card-noise"></div>
-              <div class="roulette__card-logo-wrap" aria-hidden="true">
-                <img class="roulette__card-logo" src="assets/hero/simply-leads-logo.png" alt="" width="200" height="200" />
-              </div>
-              <div class="roulette__card-inner">
-                <span class="roulette__card-label">SaaS · Application Web</span>
-                <h3 class="roulette__card-title">Simply<br>Leads</h3>
-                <p class="roulette__card-desc">Outil de génération et gestion de leads pensé pour les PME et indépendants.</p>
-                <a href="projets/simply-leads.html" class="roulette__card-link js-project-link" data-project-transition="simply-leads"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
-              </div>
-            </div>
-
-            <div class="roulette__card roulette__card--jmmc" data-idx="3" style="background:#1A1006;">
-              <div class="roulette__card-noise"></div>
-              <div class="roulette__card-logo-wrap" aria-hidden="true">
-                <img class="roulette__card-logo" src="assets/hero/jmmc-logo.png" alt="" width="200" height="200" />
-              </div>
-              <div class="roulette__card-inner">
-                <span class="roulette__card-label">Mode · E-Commerce Shopify</span>
-                <h3 class="roulette__card-title">JMMC<br>Shop</h3>
-                <p class="roulette__card-desc">Boutique en ligne haut de gamme sur mesure pour une marque de mode locale.</p>
-                <a href="projets/jmmc-shop.html" class="roulette__card-link js-project-link" data-project-transition="jmmc-shop"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
-              </div>
-            </div>
-
-            <div class="roulette__card roulette__card--laetitia" data-idx="4" style="background:#0E1A0C;">
-              <div class="roulette__card-noise"></div>
-              <div class="roulette__card-logo-wrap" aria-hidden="true">
-                <img class="roulette__card-logo" src="assets/hero/laetitia-logo.png" alt="" width="200" height="200" />
-              </div>
-              <div class="roulette__card-inner">
-                <span class="roulette__card-label">Nutrition · Site Vitrine</span>
-                <h3 class="roulette__card-title">Laetitia<br>Nutrition</h3>
-                <p class="roulette__card-desc">Site vitrine et blog pour une diététicienne nutritionniste indépendante.</p>
-                <a href="projets/laetitia-nutrition.html" class="roulette__card-link js-project-link" data-project-transition="laetitia-nutrition"><span>Voir le projet</span><span class="roulette__card-arrow">↗</span></a>
-              </div>
-            </div>
-
-          </div>
+          <div class="roulette__preview" id="roulette-preview" aria-live="polite"></div>
         </div>
 
       </div>
@@ -1095,6 +1029,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
   <script src="js/projects-data.js"></script>
+  <script src="js/works-cards.js"></script>
   <script src="js/hero-previews.js"></script>
   <script src="js/main.js"></script>
   <script src="js/project-page.js"></script>
