@@ -32,7 +32,7 @@
     const link = document.createElement('link');
     link.id = 'project-css';
     link.rel = 'stylesheet';
-    link.href = 'css/project.css';
+    link.href = '/css/project.css';
     document.head.appendChild(link);
   }
 
@@ -44,7 +44,8 @@
       path === '' ||
       path === '/' ||
       path === 'index.html' ||
-      path.endsWith('/index.html')
+      path.endsWith('/index.html') ||
+      path.endsWith('/index')
     );
     if (!isHome) return false;
     return (
@@ -79,7 +80,10 @@
     const scrollToTop = isHomeTopLink(trigger);
     const resumeOnly = !scrollToTop && container?.dataset?.mfScrollReady === '1';
 
+    document.documentElement.classList.remove('is-project-view');
     setBodyPage('home');
+    window.__mfLenis?.start();
+    ScrollTrigger.enable();
     window.MF?.initHomeFromBarba?.({ resumeOnly, scrollToTop });
     return gsap.fromTo(
       data.next.container,

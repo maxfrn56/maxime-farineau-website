@@ -81,6 +81,11 @@ app.use(
 app.post('/send', handleContactPost);
 app.post('/api/send', handleContactPost);
 
+/* Accueil — / et /index.html */
+app.get(['/', '/index', '/index.html'], (_, res) => {
+  res.sendFile(path.join(ROOT, 'index.html'));
+});
+
 app.get('/health', (_, res) => {
   res.json({
     status: 'ok',

@@ -66,9 +66,9 @@ ${faviconProject}  <link rel="stylesheet" href="../css/style.css" />
 
         <header class="project-cmd__top">
           <div class="project-cmd__brand">
-            <a href="../index.html" class="project-cmd__logo">MAXIME FARINEAU</a>
+            <a href="/" class="project-cmd__logo">MAXIME FARINEAU</a>
             <nav class="project-cmd__tabs" aria-label="Navigation projet">
-              <a href="../index.html#works" class="project-cmd__tab is-active">Projects</a>
+              <a href="/#works" class="project-cmd__tab is-active">Projects</a>
               <button type="button" class="project-cmd__tab" data-panel-trigger>Contact</button>
             </nav>
           </div>
@@ -88,7 +88,7 @@ ${faviconProject}  <link rel="stylesheet" href="../css/style.css" />
               <span class="project-cmd__ok">LINK:OK</span>
             </div>
             <div class="project-cmd__panel-scroll">
-              <a href="../index.html#works" class="project-cmd__back">← Retour aux projets</a>
+              <a href="/#works" class="project-cmd__back">← Retour aux projets</a>
 
               <div class="project-cmd__context">
                 <span class="project-cmd__context-label">Active_Context</span>

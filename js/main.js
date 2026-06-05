@@ -1440,7 +1440,8 @@ function isHomeHref(href) {
     path === '' ||
     path === '/' ||
     path === 'index.html' ||
-    path.endsWith('/index.html')
+    path.endsWith('/index.html') ||
+    path.endsWith('/index')
   );
 }
 
@@ -1464,8 +1465,15 @@ function initGlobalFeatures(lenis) {
     const link = e.target.closest('a');
     if (!link || !isHomeTopLink(link)) return;
 
-    const onHome = document.querySelector('[data-barba-namespace="home"]');
-    if (!onHome) return;
+    // Sur une page projet : laisser Barba (ou la navigation native) ramener à l’accueil
+    if (
+      document.body.classList.contains('page-project') ||
+      document.documentElement.classList.contains('is-project-view')
+    ) {
+      return;
+    }
+
+    if (!document.body.classList.contains('page-home')) return;
 
     e.preventDefault();
     window.MF?.scrollHomeToTop?.();
