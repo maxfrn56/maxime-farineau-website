@@ -538,13 +538,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let homeScrollWorldInit = false;
 
+  function restoreHomeEnvironment({ scrollToTop = false } = {}) {
+    document.documentElement.classList.remove('is-project-view');
+    document.body.style.removeProperty('--project-accent');
+    document.getElementById('nav')?.classList.remove('is-scrolled');
+
+    ScrollTrigger.enable();
+    window.__mfLenis?.start();
+
+    if (scrollToTop) {
+      window.__mfHomeScroll = 0;
+      resetHomeScroll();
+      gsap.killTweensOf(document.body);
+      document.body.setAttribute('data-theme', 'dark');
+      gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
+    }
+
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh(true);
+      ScrollTrigger.update();
+    });
+  }
+
   function initScrollWorld() {
     ScrollTrigger.enable();
     window.__mfLenis?.start();
 
     if (homeScrollWorldInit) {
-      resetHomeScroll();
-      ScrollTrigger.refresh();
+      restoreHomeEnvironment({ scrollToTop: true });
       return;
     }
     homeScrollWorldInit = true;
@@ -1131,13 +1152,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('[data-barba-namespace="home"]');
     if (!container) return;
 
-    ScrollTrigger.enable();
-    window.__mfLenis?.start();
-
     if (scrollToTop) {
       window.__mfHomeScroll = 0;
       resumeOnly = false;
     }
+
+    restoreHomeEnvironment({ scrollToTop });
 
     gsap.set('#nav', { opacity: 1, y: 0, clearProps: 'transform' });
 
@@ -1177,11 +1197,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (resumeOnly && container.dataset.mfScrollReady === '1') {
       window.MF?.resumeHome?.();
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh(true);
+        ScrollTrigger.update();
+      });
       return;
     }
 
-    window.scrollTo(0, 0);
-    lenis.scrollTo(0, { immediate: true });
     initScrollWorld();
   }
 
@@ -1401,6 +1423,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.MF = window.MF || {};
   window.MF.initHomeFromBarba = initHomeFromBarba;
   window.MF.initScrollWorld = initScrollWorld;
+  window.MF.restoreHomeEnvironment = restoreHomeEnvironment;
   window.MF.scrollHomeToTop = function scrollHomeToTop() {
     window.__mfHomeScroll = 0;
     const l = window.__mfLenis;
@@ -1706,13 +1729,13 @@ window.MF.pauseHome = function pauseHome() {
 window.MF.resumeHome = function resumeHome() {
   const lenis = window.__mfLenis;
   ScrollTrigger.enable();
-  ScrollTrigger.refresh();
   lenis?.start();
   const y = window.__mfHomeScroll ?? 0;
   requestAnimationFrame(() => {
     lenis?.scrollTo(y, { immediate: true });
     window.scrollTo(0, y);
-    ScrollTrigger.refresh();
+    ScrollTrigger.refresh(true);
+    ScrollTrigger.update();
   });
 };
 

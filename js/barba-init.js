@@ -80,10 +80,7 @@
     const scrollToTop = isHomeTopLink(trigger);
     const resumeOnly = !scrollToTop && container?.dataset?.mfScrollReady === '1';
 
-    document.documentElement.classList.remove('is-project-view');
     setBodyPage('home');
-    window.__mfLenis?.start();
-    ScrollTrigger.enable();
     window.MF?.initHomeFromBarba?.({ resumeOnly, scrollToTop });
     return gsap.fromTo(
       data.next.container,
@@ -94,7 +91,9 @@
         duration: resumeOnly ? 0.5 : 0.6,
         ease: 'power2.out',
         onComplete() {
-          ScrollTrigger.refresh();
+          window.MF?.restoreHomeEnvironment?.({ scrollToTop });
+          ScrollTrigger.refresh(true);
+          ScrollTrigger.update();
           window.dispatchEvent(
             new CustomEvent('mf:page-enter', { detail: { namespace: 'home', resumeOnly } })
           );
