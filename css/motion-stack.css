@@ -1,0 +1,88 @@
+/* ─── MOTION STACK — marquee + about ─────────────────── */
+
+.marquee__lib {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+  color: var(--clr-light);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--lib-accent, var(--clr-accent)) 45%, transparent);
+  transition: color 0.35s ease;
+}
+
+.marquee__lib::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lib-accent, var(--clr-accent));
+  box-shadow: 0 0 12px var(--lib-accent, var(--clr-accent));
+  flex-shrink: 0;
+}
+
+.marquee__lib[data-lib='gsap']   { --lib-accent: #88ce02; }
+.marquee__lib[data-lib='barba']  { --lib-accent: #4f8cff; }
+.marquee__lib[data-lib='framer'] { --lib-accent: #e85cff; }
+
+.about__motion {
+  margin-bottom: clamp(28px, 3.5vw, 40px);
+}
+
+.about__motion-label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.about__tags--motion {
+  margin-bottom: 12px;
+}
+
+.about__tag--motion {
+  position: relative;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border: 1px solid color-mix(in srgb, var(--lib-accent) 55%, var(--clr-muted-2));
+  color: var(--clr-dark);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--lib-accent) 8%, transparent);
+  cursor: default;
+  will-change: transform;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.about__tag--motion[data-lib='gsap']   { --lib-accent: #88ce02; }
+.about__tag--motion[data-lib='barba']  { --lib-accent: #4f8cff; }
+.about__tag--motion[data-lib='framer'] { --lib-accent: #e85cff; }
+
+.about__tag--motion:hover {
+  border-color: var(--lib-accent);
+  background: color-mix(in srgb, var(--lib-accent) 14%, transparent);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--lib-accent) 22%, transparent);
+}
+
+.about__motion-note {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  line-height: 1.65;
+  letter-spacing: 0.04em;
+  color: var(--clr-muted-2);
+  max-width: 420px;
+}
+
+@media (max-width: 768px) {
+  .marquee__lib::before {
+    width: 5px;
+    height: 5px;
+  }
+
+  .about__tag--motion {
+    padding: 7px 12px;
+    font-size: 10px;
+  }
+}

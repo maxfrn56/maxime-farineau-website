@@ -1555,6 +1555,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  window.MF?.initMotionStack?.();
+
   if (skipPreloader) {
     whenFontsReady().then(() => {
       refitHeroLayout(false);

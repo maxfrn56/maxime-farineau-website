@@ -100,6 +100,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/hero-preview.css" />
   <link rel="stylesheet" href="css/works-cmd.css" />
+  <link rel="stylesheet" href="css/motion-stack.css" />
   <link rel="stylesheet" href="css/project.css" id="project-css" />
 </head>
 <body class="page-home" data-barba="wrapper">
@@ -241,6 +242,9 @@
     <div class="marquee-section" aria-hidden="true">
       <div class="marquee-track">
         <div class="marquee__inner">
+          <span class="marquee__lib" data-lib="gsap">GSAP</span><span class="sep">✦</span>
+          <span class="marquee__lib" data-lib="barba">BARBA.JS</span><span class="sep">✦</span>
+          <span class="marquee__lib" data-lib="framer">FRAMER MOTION</span><span class="sep">✦</span>
           <span>REACT</span><span class="sep">✦</span>
           <span>NODE.JS</span><span class="sep">✦</span>
           <span>PYTHON</span><span class="sep">✦</span>
@@ -252,6 +256,9 @@
           <span>PRESTASHOP</span><span class="sep">✦</span>
         </div>
         <div class="marquee__inner" aria-hidden="true">
+          <span class="marquee__lib" data-lib="gsap">GSAP</span><span class="sep">✦</span>
+          <span class="marquee__lib" data-lib="barba">BARBA.JS</span><span class="sep">✦</span>
+          <span class="marquee__lib" data-lib="framer">FRAMER MOTION</span><span class="sep">✦</span>
           <span>REACT</span><span class="sep">✦</span>
           <span>NODE.JS</span><span class="sep">✦</span>
           <span>PYTHON</span><span class="sep">✦</span>
@@ -396,6 +403,15 @@
           <p class="about__body">
             Basé à Biarritz, je travaille avec des acteurs locaux pour créer des sites internet et applications sur mesure. Chaque projet est traité avec la même exigence : performance, esthétique et résultats.
           </p>
+          <div class="about__motion">
+            <span class="about__motion-label tag-code">// motion_stack</span>
+            <div class="about__tags about__tags--motion" aria-label="Librairies animation et transitions">
+              <span class="about__tag about__tag--motion" data-lib="gsap" data-delay="0">GSAP</span>
+              <span class="about__tag about__tag--motion" data-lib="barba" data-delay="0.08">Barba.js</span>
+              <span class="about__tag about__tag--motion" data-lib="framer" data-delay="0.16">Framer Motion</span>
+            </div>
+            <p class="about__motion-note">Transitions fluides, scroll cinématique et micro-interactions — ce portfolio en est la démo live.</p>
+          </div>
           <div class="about__tags" aria-label="Stack technique">
             <span>React</span>
             <span>Node.js</span>
@@ -429,6 +445,10 @@
   stack: [
     <span class="tok-str">"React"</span>, <span class="tok-str">"Node.js"</span>,
     <span class="tok-str">"Python"</span>, <span class="tok-str">"Next.js"</span>
+  ],
+  motion: [
+    <span class="tok-str">"GSAP"</span>, <span class="tok-str">"Barba.js"</span>,
+    <span class="tok-str">"Framer Motion"</span>, <span class="tok-str">"Lenis"</span>
   ],
   platforms: [
     <span class="tok-str">"Shopify"</span>, <span class="tok-str">"Webflow"</span>,
@@ -1123,6 +1143,7 @@
   <script src="js/projects-data.js"></script>
   <script src="js/works-cards.js"></script>
   <script src="js/hero-previews.js"></script>
+  <script src="js/motion-stack.js"></script>
   <script src="js/main.js"></script>
   <script src="js/project-page.js"></script>
   <script src="js/barba-init.js"></script>
