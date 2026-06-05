@@ -3,8 +3,79 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Maxime Farineau — Développeur web full stack freelance basé à Biarritz. Sites vitrine, e-commerce, applications web et intégration IA." />
-  <title>Maxime Farineau — Développeur Web Full Stack</title>
+  <meta name="description" content="Développeur web full stack freelance à Biarritz. Création de sites vitrine, e-commerce, applications web et intégration IA. Performance, design et SEO technique." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Maxime Farineau" />
+  <meta name="keywords" content="développeur web, freelance, Biarritz, Pays Basque, full stack, site vitrine, e-commerce, application web, SEO" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="canonical" href="https://maximefarineau.com/" />
+  <link rel="alternate" hreflang="fr" href="https://maximefarineau.com/" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Maxime Farineau" />
+  <meta property="og:title" content="Maxime Farineau | Développeur Web Full Stack Freelance — Biarritz" />
+  <meta property="og:description" content="Développeur web full stack freelance à Biarritz. Sites vitrine, e-commerce, applications web et intégration IA." />
+  <meta property="og:url" content="https://maximefarineau.com/" />
+  <meta property="og:image" content="https://maximefarineau.com/assets/og-cover.jpg" />
+  <meta property="og:image:alt" content="Maxime Farineau — Développeur Web Full Stack" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Maxime Farineau | Développeur Web Full Stack Freelance — Biarritz" />
+  <meta name="twitter:description" content="Développeur web full stack freelance à Biarritz. Sites vitrine, e-commerce, applications web et intégration IA." />
+  <meta name="twitter:image" content="https://maximefarineau.com/assets/og-cover.jpg" />
+  <title>Maxime Farineau | Développeur Web Full Stack Freelance — Biarritz</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://maximefarineau.com/#website",
+        "url": "https://maximefarineau.com/",
+        "name": "Maxime Farineau",
+        "description": "Portfolio et services de développement web full stack freelance à Biarritz.",
+        "inLanguage": "fr-FR",
+        "publisher": { "@id": "https://maximefarineau.com/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://maximefarineau.com/#person",
+        "name": "Maxime Farineau",
+        "url": "https://maximefarineau.com/",
+        "email": "contact@maximefarineau.com",
+        "telephone": "+33669347443",
+        "jobTitle": "Développeur web full stack freelance",
+        "worksFor": { "@id": "https://maximefarineau.com/#business" },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "6 rue du Puits",
+          "addressLocality": "Locoal-Mendon",
+          "postalCode": "56550",
+          "addressCountry": "FR"
+        },
+        "areaServed": ["Biarritz", "Pays Basque", "France"],
+        "knowsAbout": ["Développement web", "React", "Node.js", "E-commerce", "SEO technique", "Intelligence artificielle"]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://maximefarineau.com/#business",
+        "name": "Maxime Farineau — Développement Web",
+        "url": "https://maximefarineau.com/",
+        "email": "contact@maximefarineau.com",
+        "telephone": "+33669347443",
+        "priceRange": "€€",
+        "areaServed": "France",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "6 rue du Puits",
+          "addressLocality": "Locoal-Mendon",
+          "postalCode": "56550",
+          "addressCountry": "FR"
+        },
+        "founder": { "@id": "https://maximefarineau.com/#person" }
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="assets/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
@@ -91,6 +162,7 @@
       <div class="hero__body">
 
         <div class="hero__title-wrap">
+          <p class="visually-hidden">Développeur web full stack freelance à Biarritz — sites vitrine, e-commerce et applications web sur mesure.</p>
           <h1 class="hero__title">
             <span class="hero__line txt-stroke--light" data-split>TURNING COMPLEX</span>
             <span class="hero__line hero__line--fill" data-split>IDEAS INTO</span>
@@ -324,7 +396,11 @@
           </div>
           <button class="cta-wide" data-panel-trigger>
             <span class="cta-wide__text">Tell me about your idea</span>
-            <span class="cta-wide__arrow">↗</span>
+            <span class="cta-arrow" aria-hidden="true">
+              <svg class="cta-arrow__svg" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 15L15 5M15 5H8M15 5V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
           </button>
         </div>
         <div class="about__code-wrap">
@@ -784,7 +860,11 @@
       <div class="contact__footer">
         <button class="contact__email contact__open-panel" data-panel-trigger data-cursor="view">
           <span class="contact__email-text">Tell me about your idea</span>
-          <span class="contact__email-arrow">↗</span>
+          <span class="cta-arrow" aria-hidden="true">
+            <svg class="cta-arrow__svg" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 15L15 5M15 5H8M15 5V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </button>
         <a href="mailto:contact@maximefarineau.com" class="contact__mail-link">contact@maximefarineau.com</a>
         <div class="contact__infos">
@@ -1028,12 +1108,14 @@
   <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
+  <script src="js/seo-config.js"></script>
   <script src="js/projects-data.js"></script>
   <script src="js/works-cards.js"></script>
   <script src="js/hero-previews.js"></script>
   <script src="js/main.js"></script>
   <script src="js/project-page.js"></script>
   <script src="js/barba-init.js"></script>
+  <script src="js/seo-meta.js"></script>
 
 </body>
 </html>

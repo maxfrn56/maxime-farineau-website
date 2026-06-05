@@ -11,6 +11,59 @@ const faviconProject = readFileSync(join(root, 'partials/favicon-project.html'),
 const orderMatch = dataSrc.match(/window\.MF_PROJECT_ORDER = (\[[\s\S]*?\]);/);
 const order = orderMatch ? eval(orderMatch[1]) : [];
 
+const SITE_URL = 'https://maximefarineau.com';
+const OG_IMAGE = `${SITE_URL}/assets/og-cover.jpg`;
+
+function escapeHtml(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function seoHead({ pageTitle, description, canonicalPath, ogType = 'article' }) {
+  const url = `${SITE_URL}${canonicalPath}`;
+  const desc = escapeHtml(description);
+  const title = escapeHtml(pageTitle);
+  return `  <meta name="description" content="${desc}" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Maxime Farineau" />
+  <link rel="canonical" href="${url}" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:type" content="${ogType}" />
+  <meta property="og:site_name" content="Maxime Farineau" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${desc}" />
+  <meta property="og:url" content="${url}" />
+  <meta property="og:image" content="${OG_IMAGE}" />
+  <meta property="og:image:alt" content="${title}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${title}" />
+  <meta name="twitter:description" content="${desc}" />
+  <meta name="twitter:image" content="${OG_IMAGE}" />
+  <title>${title}</title>`;
+}
+
+function projectJsonLd(slug, p) {
+  const payload = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: p.title,
+    description: p.description,
+    url: `${SITE_URL}/projets/${slug}.html`,
+    inLanguage: 'fr-FR',
+    dateCreated: p.year,
+    creator: {
+      '@type': 'Person',
+      name: 'Maxime Farineau',
+      url: `${SITE_URL}/`,
+    },
+    keywords: p.type,
+  };
+  return `  <script type="application/ld+json">${JSON.stringify(payload)}</script>`;
+}
+
 function extractProject(slug) {
   const re = new RegExp(`'${slug}':\\s*\\{([\\s\\S]*?)\\n  \\},`);
   const m = dataSrc.match(re);
@@ -22,6 +75,7 @@ function extractProject(slug) {
     const m2 = block.match(new RegExp(`${key}:\\s*"([^"]*)"`));
     return m2 ? m2[1] : undefined;
   };
+  const descM = block.match(/description:\s*\n\s*'([^']+)'/);
   return {
     title: g('title'),
     num: g('num'),
@@ -30,6 +84,7 @@ function extractProject(slug) {
     accent: g('accent'),
     prev: g('prev'),
     next: g('next'),
+    description: descM ? descM[1] : `${g('title')} — projet web par Maxime Farineau`,
   };
 }
 
@@ -37,15 +92,20 @@ function page(slug, p) {
   const prevP = extractProject(p.prev);
   const nextP = extractProject(p.next);
   const session = p.num?.padStart(2, '0') || '01';
+  const pageTitle = `${p.title} — Projet Web | Maxime Farineau`;
+  const metaDesc = `${p.description} (${p.type}) — Réalisé par Maxime Farineau, développeur web freelance.`
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 160);
 
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="${p.title} — Projet par Maxime Farineau" />
-  <title>${p.title} — Maxime Farineau</title>
-${faviconProject}  <link rel="stylesheet" href="../css/style.css" />
+${seoHead({ pageTitle, description: metaDesc, canonicalPath: `/projets/${slug}.html` })}
+${faviconProject}${projectJsonLd(slug, p)}
+  <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/project.css" />
 </head>
 <body class="page-project" data-theme="dark" data-barba="wrapper" style="--project-accent: ${p.accent}">
@@ -234,10 +294,12 @@ ${faviconProject}  <link rel="stylesheet" href="../css/style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
+  <script src="../js/seo-config.js"></script>
   <script src="../js/projects-data.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/project-page.js"></script>
   <script src="../js/barba-init.js"></script>
+  <script src="../js/seo-meta.js"></script>
 </body>
 </html>`;
 }

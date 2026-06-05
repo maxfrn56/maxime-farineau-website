@@ -11,6 +11,7 @@ const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const { handleContactPost } = require('./lib/contact-handler');
+const { buildSitemap } = require('./lib/seo');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -84,6 +85,11 @@ app.post('/api/send', handleContactPost);
 /* Accueil — / et /index.html */
 app.get(['/', '/index', '/index.html'], (_, res) => {
   res.sendFile(path.join(ROOT, 'index.html'));
+});
+
+app.get('/sitemap.xml', (_, res) => {
+  res.type('application/xml');
+  res.send(buildSitemap());
 });
 
 app.get('/health', (_, res) => {
