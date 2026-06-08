@@ -1280,6 +1280,10 @@ body[data-theme="light"] {
   padding: 24px 20px;
 }
 
+.code-block__body.is-static {
+  min-height: var(--code-block-h, auto);
+}
+
 .code-block__body pre {
   position: relative;
   font-family: var(--ff-mono);
@@ -2360,6 +2364,10 @@ body[data-theme="light"] {
     font-size: 11px;
     white-space: pre-wrap;
     word-break: break-word;
+  }
+
+  .code-block__body.is-static pre {
+    min-height: var(--code-block-h, 12.5em);
   }
 
   .cta-wide {

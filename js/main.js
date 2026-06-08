@@ -498,7 +498,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function initCodeTyper(codeBlock) {
     const codeEl = codeBlock.querySelector('.js-code-typing');
     const pre    = codeEl?.closest('pre');
+    const body   = codeBlock.querySelector('.code-block__body');
     if (!codeEl || !pre) return;
+
+    /* Mobile : code statique — le typer reflow le layout et fait sauter le scroll */
+    if (useNativeScroll) {
+      const fullH = pre.offsetHeight;
+      if (fullH > 0) {
+        body?.style.setProperty('--code-block-h', `${fullH}px`);
+        body?.classList.add('is-static');
+      }
+      return;
+    }
 
     const chunks     = [];
     const stringDefs = [];
@@ -543,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const typeJitter  = () => TYPE_MS + Math.random() * 14;
 
     function parkCursor() {
-      pre.appendChild(cursor);
+      if (cursor.parentNode !== pre) pre.appendChild(cursor);
     }
 
     async function typeChunks() {
@@ -1297,12 +1308,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (shouldUseNativeScroll() && window.visualViewport) {
       let vvTimer;
-      const onViewportChange = () => {
+      const onViewportResize = () => {
         clearTimeout(vvTimer);
         vvTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
       };
-      window.visualViewport.addEventListener('resize', onViewportChange);
-      window.visualViewport.addEventListener('scroll', onViewportChange);
+      window.visualViewport.addEventListener('resize', onViewportResize);
     }
 
     const homeContainer = document.querySelector('[data-barba-namespace="home"]');
