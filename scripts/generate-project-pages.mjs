@@ -14,7 +14,7 @@ const orderMatch = dataSrc.match(/window\.MF_PROJECT_ORDER = (\[[\s\S]*?\]);/);
 const order = orderMatch ? eval(orderMatch[1]) : [];
 
 const SITE_URL = 'https://maximefarineau.com';
-const OG_IMAGE = `${SITE_URL}/assets/og-cover.jpg`;
+const OG_IMAGE = `https://www.maximefarineau.com/assets/og-cover.jpg?v=2`;
 
 function escapeHtml(s) {
   return String(s ?? '')
@@ -39,6 +39,10 @@ function seoHead({ pageTitle, description, canonicalPath, ogType = 'article' }) 
   <meta property="og:description" content="${desc}" />
   <meta property="og:url" content="${url}" />
   <meta property="og:image" content="${OG_IMAGE}" />
+  <meta property="og:image:secure_url" content="${OG_IMAGE}" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="${title}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${title}" />

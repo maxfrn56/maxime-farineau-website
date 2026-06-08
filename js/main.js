@@ -31,12 +31,29 @@ document.addEventListener('DOMContentLoaded', () => {
      GSAP SETUP
   ══════════════════════════════════════════════════ */
   gsap.registerPlugin(ScrollTrigger);
-  ScrollTrigger.config({ ignoreMobileResize: true });
 
   const MOBILE_MQ = window.matchMedia('(max-width: 768px), (pointer: coarse)');
 
   function shouldUseNativeScroll() {
     return MOBILE_MQ.matches;
+  }
+
+  const useNativeScroll = shouldUseNativeScroll();
+  window.__mfUseNativeScroll = useNativeScroll;
+
+  ScrollTrigger.config({
+    ignoreMobileResize: true,
+    limitCallbacks: useNativeScroll,
+  });
+
+  let scrollTriggerUpdateQueued = false;
+  function scheduleScrollTriggerUpdate() {
+    if (scrollTriggerUpdateQueued) return;
+    scrollTriggerUpdateQueued = true;
+    requestAnimationFrame(() => {
+      scrollTriggerUpdateQueued = false;
+      ScrollTrigger.update();
+    });
   }
 
   function createNativeScrollController() {
@@ -53,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       scrollTo(target, opts = {}) {
         const offset = opts.offset ?? 0;
-        const immediate = opts.immediate;
+        const immediate = opts.immediate ?? true;
         let top = 0;
 
         if (typeof target === 'number') {
@@ -65,18 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
         top = Math.max(0, top);
         window.scrollTo({ top, behavior: immediate ? 'auto' : 'smooth' });
 
-        if (immediate) {
-          scrollY = top;
-          listeners.forEach((cb) => cb({ scroll: scrollY }));
-          ScrollTrigger.update();
-        }
+        scrollY = top;
+        listeners.forEach((cb) => cb({ scroll: scrollY }));
+        scheduleScrollTriggerUpdate();
       },
     };
 
     window.addEventListener('scroll', () => {
       scrollY = window.scrollY;
       listeners.forEach((cb) => cb({ scroll: scrollY }));
-      ScrollTrigger.update();
+      scheduleScrollTriggerUpdate();
     }, { passive: true });
 
     return api;
@@ -85,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ══════════════════════════════════════════════════
      LENIS SMOOTH SCROLL (desktop) / scroll natif (mobile)
   ══════════════════════════════════════════════════ */
-  const useNativeScroll = shouldUseNativeScroll();
   const lenis = useNativeScroll
     ? createNativeScrollController()
     : new Lenis({
@@ -1253,13 +1267,17 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     function setTheme({ bg, fg, theme }) {
-      gsap.to(document.body, {
-        backgroundColor: bg,
-        color:           fg,
-        duration:        1.1,
-        ease:            'power2.inOut',
-        overwrite:       true,
-      });
+      if (shouldUseNativeScroll()) {
+        gsap.set(document.body, { backgroundColor: bg, color: fg });
+      } else {
+        gsap.to(document.body, {
+          backgroundColor: bg,
+          color:           fg,
+          duration:        1.1,
+          ease:            'power2.inOut',
+          overwrite:       true,
+        });
+      }
       document.body.setAttribute('data-theme', theme);
     }
 
@@ -1276,6 +1294,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     initServicesConsole();
+
+    if (shouldUseNativeScroll() && window.visualViewport) {
+      let vvTimer;
+      const onViewportChange = () => {
+        clearTimeout(vvTimer);
+        vvTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+      };
+      window.visualViewport.addEventListener('resize', onViewportChange);
+      window.visualViewport.addEventListener('scroll', onViewportChange);
+    }
 
     const homeContainer = document.querySelector('[data-barba-namespace="home"]');
     if (homeContainer) homeContainer.dataset.mfScrollReady = '1';
@@ -1380,6 +1408,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    function scrollNavToActive(btn) {
+      if (!btn || !useNativeScroll) return;
+      btn.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    }
+
     function switchPanel(index) {
       if (index === activeIndex || animating || !panels[index]) return;
       animating = true;
@@ -1391,6 +1424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.classList.toggle('is-active', i === index);
         btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
       });
+      scrollNavToActive(navItems[index]);
 
       next.classList.add('is-switching');
       gsap.set(next, { opacity: 0, y: 18, visibility: 'visible', pointerEvents: 'auto', zIndex: 3 });
@@ -1419,7 +1453,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     navItems.forEach((btn, i) => {
-      btn.addEventListener('mouseenter', () => switchPanel(i));
+      if (!useNativeScroll) {
+        btn.addEventListener('mouseenter', () => switchPanel(i));
+      }
       btn.addEventListener('focus', () => switchPanel(i));
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1512,7 +1548,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = document.querySelector(id);
       if (target) {
         e.preventDefault();
-        lenis.scrollTo(target, { offset: -80, duration: 1.4 });
+        lenis.scrollTo(target, {
+          offset: -80,
+          duration: useNativeScroll ? 0 : 1.4,
+          immediate: useNativeScroll,
+        });
       }
     });
   });
@@ -1540,13 +1580,24 @@ document.addEventListener('DOMContentLoaded', () => {
       return x;
     }
 
+    let marqueePending = false;
+    let marqueeDelta = 0;
+
     lenis.on('scroll', ({ scroll }) => {
       const delta = scroll - lastScroll;
       lastScroll = scroll;
       if (Math.abs(delta) < 0.01) return;
 
-      marqueeX = wrapMarqueeX(marqueeX - delta * marqueeSpd);
-      gsap.set(marqueeTrack, { x: marqueeX, force3D: true });
+      marqueeDelta += delta;
+      if (marqueePending) return;
+      marqueePending = true;
+      requestAnimationFrame(() => {
+        marqueePending = false;
+        const d = marqueeDelta;
+        marqueeDelta = 0;
+        marqueeX = wrapMarqueeX(marqueeX - d * marqueeSpd);
+        gsap.set(marqueeTrack, { x: marqueeX, force3D: true });
+      });
     });
 
     window.addEventListener('resize', () => {
@@ -1574,7 +1625,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const l = window.__mfLenis;
     if (l) {
       l.scrollTo(0, { immediate: true });
-      l.scrollTo(0, { duration: 1.2 });
+      if (!useNativeScroll) l.scrollTo(0, { duration: 1.2 });
     } else {
       window.scrollTo(0, 0);
     }
@@ -1886,7 +1937,6 @@ window.MF.resumeHome = function resumeHome() {
   const y = window.__mfHomeScroll ?? 0;
   requestAnimationFrame(() => {
     lenis?.scrollTo(y, { immediate: true });
-    window.scrollTo(0, y);
     ScrollTrigger.refresh(true);
     ScrollTrigger.update();
   });

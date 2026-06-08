@@ -3,7 +3,9 @@ window.MF_SEO = {
   siteUrl: 'https://maximefarineau.com',
   siteName: 'Maxime Farineau',
   locale: 'fr_FR',
-  defaultImage: 'https://maximefarineau.com/assets/og-cover.jpg',
+  defaultImage: 'https://www.maximefarineau.com/assets/og-cover.jpg?v=2',
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
   home: {
     title: 'Maxime Farineau | Développeur Web Full Stack Freelance — Biarritz',
     description:
