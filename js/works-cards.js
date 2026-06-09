@@ -1,16 +1,8 @@
-/* Works — cartes preview épurées */
+/* Works — cartes preview (style project-cmd) */
 function buildWorksCards(mountEl) {
   const mount = mountEl || document.getElementById('roulette-preview');
   const order = window.MF_PROJECT_ORDER || Object.keys(window.PROJECTS || {});
   if (!mount || !order.length || !window.PROJECTS) return;
-
-  const LOGOS = {
-    'saline-ceviche': { src: 'assets/hero/saline-logo.png', max: '56%' },
-    'cap-nage': { src: 'assets/hero/cap-nage-logo.png', max: '52%' },
-    'simply-leads': { src: 'assets/hero/simply-leads-logo.png', max: '60%' },
-    'jmmc-shop': { src: 'assets/hero/jmmc-logo.png', max: '64%' },
-    'laetitia-nutrition': { src: 'assets/hero/laetitia-logo.png', max: '72%' },
-  };
 
   function posterSrc(p) {
     if (!p.poster) return '';
@@ -20,43 +12,64 @@ function buildWorksCards(mountEl) {
   function buildCard(slug, idx) {
     const p = window.PROJECTS[slug];
     if (!p) return '';
-    const logo = LOGOS[slug];
-    const stack = (p.stack || []).slice(0, 2);
+    const stack = (p.stack || []).slice(0, 3);
     const poster = posterSrc(p);
+    const deliverableCount = (p.deliverables || []).length;
 
-    const logoBlock = logo
-      ? `<img class="works-card__logo" src="${logo.src}" alt="" width="200" height="200" loading="lazy" style="--logo-max:${logo.max}" />`
-      : `<span class="works-card__logo-fallback" aria-hidden="true">${p.title.charAt(0)}</span>`;
-
-    const posterBlock = poster
-      ? `<img class="works-card__poster" src="${poster}" alt="" loading="lazy" />`
-      : '';
+    const screenBlock = poster
+      ? `<img class="works-card__shot" src="${poster}" alt="" loading="lazy" />`
+      : `<span class="works-card__shot-fallback" aria-hidden="true">${p.title.charAt(0)}</span>`;
 
     return `
-      <div class="roulette__card works-card" data-idx="${idx}" data-project="${slug}" style="--works-accent:${p.accent}">
+      <div class="roulette__card works-card" data-idx="${idx}" data-project="${slug}">
         <a href="projets/${slug}.html" class="works-card__link js-project-link" data-project-transition="${slug}" aria-label="Voir le projet ${p.title}">
-          <div class="works-card__visual">
-            ${posterBlock}
-            <div class="works-card__visual-glow" aria-hidden="true"></div>
-            <div class="works-card__visual-inner">
-              ${logoBlock}
-            </div>
-          </div>
-          <div class="works-card__body">
+          <header class="works-card__top">
+            <span class="works-card__mark">MF</span>
             <div class="works-card__meta">
-              <span class="works-card__num">${p.num}</span>
-              <span class="works-card__sep" aria-hidden="true">·</span>
-              <span class="works-card__year">${p.year}</span>
+              <span>PROJECT:<em>${p.num}</em></span>
+              <span>YEAR:<em>${p.year}</em></span>
+              <span class="works-card__live"><span class="works-card__live-dot" aria-hidden="true"></span>LIVE</span>
             </div>
-            <h3 class="works-card__title">${p.title}</h3>
-            <p class="works-card__type">${p.type}</p>
-            <div class="works-card__foot">
-              <div class="works-card__tags">
-                ${stack.map((s) => `<span>${s}</span>`).join('')}
+          </header>
+
+          <section class="works-card__viewport">
+            <div class="works-card__viewport-bar">
+              <span>// SHOWREEL</span>
+              <span class="works-card__type">${p.type}</span>
+            </div>
+            <div class="works-card__screen">
+              ${screenBlock}
+              <div class="works-card__hud" aria-hidden="true">
+                <span class="works-card__bracket works-card__bracket--tl"></span>
+                <span class="works-card__bracket works-card__bracket--tr"></span>
+                <span class="works-card__bracket works-card__bracket--bl"></span>
+                <span class="works-card__bracket works-card__bracket--br"></span>
+                <span class="works-card__grid"></span>
               </div>
-              <span class="works-card__cta">Voir <em aria-hidden="true">↗</em></span>
             </div>
-          </div>
+          </section>
+
+          <footer class="works-card__panel">
+            <div class="works-card__panel-bar">
+              <span>ACTIVE_CTX</span>
+              <span class="works-card__ok">LINK:OK</span>
+            </div>
+            <div class="works-card__panel-body">
+              <span class="works-card__ctx-label">Project</span>
+              <h3 class="works-card__title">${p.title}</h3>
+              <ul class="works-card__dirs">
+                ${stack.map((s, i) => `
+                  <li class="works-card__dir${i === 0 ? ' is-active' : ''}">
+                    <span>[ ${s.toLowerCase()} ]</span>
+                  </li>`).join('')}
+                <li class="works-card__dir">
+                  <span>[ deliverables ]</span>
+                  <span class="works-card__dir-count">${deliverableCount}</span>
+                </li>
+              </ul>
+              <span class="works-card__open">Ouvrir le dossier <em aria-hidden="true">→</em></span>
+            </div>
+          </footer>
         </a>
       </div>`;
   }
