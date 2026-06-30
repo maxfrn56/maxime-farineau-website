@@ -963,15 +963,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const rows = document.querySelectorAll('.statement__row');
       if (!rows.length) return;
 
-      if (useNativeScroll) {
-        rows.forEach((row) => {
-          const span = row.querySelector('.statement__row-text');
-          const text = row.getAttribute('data-flip') || '';
-          if (span) span.textContent = text;
-        });
-        return;
-      }
-
       const SEQ  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,&!? ';
       const STEP = 50;  // ms par tick de flip
       const COL  = 2;   // ticks de décalage entre colonnes
@@ -1076,6 +1067,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ScrollTrigger.create({
         trigger: '#statement',
         start: 'top 70%',
+        once: true,
         onEnter: () => {
           if (!triggered) {
             triggered = true;
@@ -1320,53 +1312,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ══════════════════════════════════════════════════
-       THEME INVERSION — doit être créé EN DERNIER
-       pour que les positions pinned soient calculées
+       THEME — fond sombre uniforme (pas d'inversion clair/sombre)
     ══════════════════════════════════════════════════ */
-    const DARK  = { bg: '#0A0A0A', fg: '#F0EDE6', theme: 'dark'  };
-    const LIGHT = { bg: '#F0EDE6', fg: '#0A0A0A', theme: 'light' };
-
-    const themeSections = [
-      { id: '#hero',      colors: DARK  },
-      { id: '#statement', colors: DARK  },
-      { id: '#works',     colors: DARK  },
-      { id: '#about',     colors: LIGHT },
-      { id: '#services',  colors: DARK  },
-      { id: '#contact',   colors: LIGHT },
-      { id: '#footer',    colors: DARK  },
-    ];
-
-    function setTheme({ bg, fg, theme }) {
-      if (shouldUseNativeScroll()) {
-        gsap.set(document.body, { backgroundColor: bg, color: fg });
-      } else {
-        gsap.to(document.body, {
-          backgroundColor: bg,
-          color:           fg,
-          duration:        1.1,
-          ease:            'power2.inOut',
-          overwrite:       true,
-        });
-      }
-      document.body.setAttribute('data-theme', theme);
-    }
-
-    if (!shouldUseNativeScroll()) {
-      themeSections.forEach(({ id, colors }) => {
-        const el = document.querySelector(id);
-        if (!el) return;
-        ScrollTrigger.create({
-          trigger:     el,
-          start:       'top 45%',
-          end:         'bottom 45%',
-          onEnter:     () => setTheme(colors),
-          onEnterBack: () => setTheme(colors),
-        });
-      });
-    } else {
-      document.body.setAttribute('data-theme', 'dark');
-      gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
-    }
+    document.body.setAttribute('data-theme', 'dark');
+    gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
 
     initServicesConsole();
 

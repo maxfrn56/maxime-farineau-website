@@ -433,8 +433,8 @@ body[data-theme="light"] {
 }
 
 .section--light {
-  background-color: var(--clr-light);
-  color: var(--clr-dark);
+  /* Typographie légèrement adoucie — fond identique au reste du site */
+  color: inherit;
 }
 
 .section__header {
@@ -1736,7 +1736,6 @@ body[data-theme="light"] {
 /* ─── CONTACT ─────────────────────────────────────────── */
 .section--contact {
   position: relative;
-  background-color: var(--clr-light);
   padding-top: var(--section-pad);
   min-height: 80svh;
   display: flex;
@@ -2273,6 +2272,7 @@ body[data-theme="light"] {
     padding-left: clamp(12px, 3vw, 32px);
   }
 
+  .contact__line.txt-stroke--light,
   .contact__line.txt-stroke--dark {
     padding: 0.1em 0.06em 0.08em 0.02em;
   }
@@ -2586,7 +2586,7 @@ body[data-theme="light"] {
 }
 
 /* ══════════════════════════════════════════════════════
-   CTA — FLOATING PILL (fixed, bottom-right)
+   CTA — FLOATING (project-cmd)
    ══════════════════════════════════════════════════════ */
 .float-cta {
   position: fixed;
@@ -2609,51 +2609,69 @@ body[data-theme="light"] {
 .float-cta__btn {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  background: #F0EDE6;
-  color: #0d0d0d;
-  border: none;
-  border-radius: 100px;
+  gap: 12px;
+  padding: 14px 18px 14px 14px;
+  background: #0c0c0c;
+  color: var(--clr-light);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
   font-family: var(--ff-tommy);
   font-weight: 900;
   font-size: 11px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(110, 216, 136, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
-  transition: color 0.45s var(--ease-out-expo),
-              transform 0.4s var(--ease-out-expo),
-              box-shadow 0.4s;
+  transition:
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.4s var(--ease-out-expo),
+    box-shadow 0.4s ease;
 }
 
 .float-cta__btn::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: #0d0d0d;
-  border-radius: inherit;
+  background: rgba(110, 216, 136, 0.08);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.5s var(--ease-out-expo);
+  transition: transform 0.45s var(--ease-out-expo);
 }
 
-.float-cta__btn:hover::before { transform: scaleX(1); }
-.float-cta__btn:hover {
-  color: #F0EDE6;
-  transform: translateY(-3px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+.float-cta__btn:hover::before,
+.float-cta__btn:focus-visible::before {
+  transform: scaleX(1);
 }
 
-.float-cta__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #4ade80;
+.float-cta__btn:hover,
+.float-cta__btn:focus-visible {
+  border-color: rgba(110, 216, 136, 0.35);
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(110, 216, 136, 0.12);
+}
+
+.float-cta__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 8px;
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #6ed888;
+  border: 1px solid rgba(110, 216, 136, 0.35);
+  background: rgba(110, 216, 136, 0.08);
   flex-shrink: 0;
-  animation: pulse 2.5s ease-in-out infinite;
   position: relative;
   z-index: 1;
 }
@@ -2664,19 +2682,45 @@ body[data-theme="light"] {
   z-index: 1;
 }
 
-.float-cta__arrow {
-  font-size: 14px;
-  transition: transform 0.4s var(--ease-out-expo);
-  display: inline-block;
+.float-cta__label {
+  color: var(--clr-light);
+  white-space: nowrap;
 }
-.float-cta__btn:hover .float-cta__arrow {
-  transform: translateX(3px) translateY(-3px);
+
+.float-cta__arrow {
+  color: #6ed888;
+  margin-left: 2px;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+
+.float-cta__btn:hover .float-cta__arrow,
+.float-cta__btn:focus-visible .float-cta__arrow {
+  transform: translateX(3px);
+}
+
+.float-cta__btn:focus-visible {
+  outline: 2px solid #6ed888;
+  outline-offset: 3px;
 }
 
 @media (max-width: 600px) {
-  .float-cta { bottom: 24px; right: 16px; }
-  .float-cta__label { display: none; }
-  .float-cta__btn { padding: 14px 16px; }
+  .float-cta {
+    bottom: max(20px, env(safe-area-inset-bottom, 20px));
+    right: 16px;
+    left: 16px;
+  }
+
+  .float-cta__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 18px;
+    gap: 10px;
+  }
+
+  .float-cta__label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
 }
 
 /* ─── INITIAL HIDDEN STATES (before JS runs) ─────────── */
