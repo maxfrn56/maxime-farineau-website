@@ -433,7 +433,7 @@ body[data-theme="light"] {
 }
 
 .section--light {
-  /* Fond géré dynamiquement par JS (body bg animation) */
+  background-color: var(--clr-light);
   color: var(--clr-dark);
 }
 
@@ -1123,11 +1123,27 @@ body[data-theme="light"] {
 
 /* Responsive roulette */
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: var(--nav-h);
+  }
+
   html,
   body {
     touch-action: pan-y;
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .grain {
+    animation: none;
+    opacity: 0.028;
+  }
+
+  .section,
+  .section--works-roulette,
+  #statement {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 720px;
   }
 
   .section--hero {

@@ -15,9 +15,13 @@
     aboutTriggers = [];
   }
 
+  function isMobileMotion() {
+    return window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+  }
+
   function initMarqueeLibs() {
     const libs = document.querySelectorAll('.marquee__lib');
-    if (!libs.length || typeof gsap === 'undefined') return;
+    if (!libs.length || typeof gsap === 'undefined' || isMobileMotion()) return;
 
     libs.forEach((el, i) => {
       const pulse = gsap.to(el, {
@@ -36,6 +40,14 @@
     const tags = document.querySelectorAll('.about__tag--motion');
     const section = document.getElementById('about');
     if (!tags.length || !section || typeof gsap === 'undefined') return;
+
+    const note = section.querySelector('.about__motion-note');
+
+    if (isMobileMotion()) {
+      tags.forEach((tag) => gsap.set(tag, { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 }));
+      if (note) gsap.set(note, { opacity: 1, y: 0 });
+      return;
+    }
 
     const hasST = typeof ScrollTrigger !== 'undefined';
     if (hasST) gsap.registerPlugin(ScrollTrigger);
@@ -95,7 +107,6 @@
       });
     });
 
-    const note = section.querySelector('.about__motion-note');
     if (note && hasST) {
       const stNote = ScrollTrigger.create({
         trigger: note,

@@ -159,6 +159,8 @@ function initWorksCardBounce(mountEl) {
   const mount = mountEl || document.getElementById('roulette-preview');
   if (!mount) return;
 
+  if (window.matchMedia('(max-width: 768px), (pointer: coarse)').matches) return;
+
   window.MF?._worksBounceObs?.disconnect();
   window.MF?._worksBounceResizeObs?.disconnect();
 

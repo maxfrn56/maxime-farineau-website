@@ -44,9 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
   ScrollTrigger.config({
     ignoreMobileResize: true,
     limitCallbacks: useNativeScroll,
+    autoRefreshEvents: useNativeScroll ? 'visibilitychange,DOMContentLoaded,load' : 'visibilitychange,DOMContentLoaded,load,resize',
   });
 
   let scrollTriggerUpdateQueued = false;
+  let scrollEndTimer = 0;
   function scheduleScrollTriggerUpdate() {
     if (scrollTriggerUpdateQueued) return;
     scrollTriggerUpdateQueued = true;
@@ -54,6 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollTriggerUpdateQueued = false;
       ScrollTrigger.update();
     });
+
+    if (useNativeScroll) {
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = window.setTimeout(() => {
+        ScrollTrigger.update();
+      }, 120);
+    }
   }
 
   function createNativeScrollController() {
@@ -70,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       scrollTo(target, opts = {}) {
         const offset = opts.offset ?? 0;
-        const immediate = opts.immediate ?? true;
+        const immediate = opts.immediate ?? false;
         let top = 0;
 
         if (typeof target === 'number') {
@@ -911,21 +920,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ── Section meta tags ── */
     document.querySelectorAll('.section__meta').forEach(el => {
+      if (useNativeScroll) {
+        gsap.set(el, { opacity: 1, y: 0 });
+        return;
+      }
       gsap.set(el, { opacity: 0, y: 10 });
       ScrollTrigger.create({
         trigger: el,
         start: 'top 90%',
+        once: true,
         onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }),
       });
     });
 
     /* ── Section titles ── */
     document.querySelectorAll('.js-reveal-title').forEach(el => {
+      if (useNativeScroll) {
+        gsap.set(el, { opacity: 1 });
+        return;
+      }
       const split = new SplitType(el, { types: 'chars' });
       gsap.set(split.chars, { yPercent: 110 });
       ScrollTrigger.create({
         trigger: el,
         start: 'top 88%',
+        once: true,
         onEnter: () => {
           gsap.to(split.chars, {
             yPercent: 0,
@@ -943,6 +962,15 @@ document.addEventListener('DOMContentLoaded', () => {
     (function initSplitFlap() {
       const rows = document.querySelectorAll('.statement__row');
       if (!rows.length) return;
+
+      if (useNativeScroll) {
+        rows.forEach((row) => {
+          const span = row.querySelector('.statement__row-text');
+          const text = row.getAttribute('data-flip') || '';
+          if (span) span.textContent = text;
+        });
+        return;
+      }
 
       const SEQ  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,&!? ';
       const STEP = 50;  // ms par tick de flip
@@ -1150,41 +1178,56 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── About statement ── */
     const aboutStatement = document.querySelector('.about__statement');
     if (aboutStatement) {
-      const split = new SplitType(aboutStatement, { types: 'words' });
-      gsap.set(split.words, { opacity: 0, y: 16 });
-      ScrollTrigger.create({
-        trigger: aboutStatement,
-        start: 'top 82%',
-        onEnter: () => {
-          gsap.to(split.words, {
-            opacity: 1, y: 0,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: 'power3.out',
-          });
-        },
-      });
+      if (useNativeScroll) {
+        gsap.set(aboutStatement, { opacity: 1, y: 0 });
+      } else {
+        const split = new SplitType(aboutStatement, { types: 'words' });
+        gsap.set(split.words, { opacity: 0, y: 16 });
+        ScrollTrigger.create({
+          trigger: aboutStatement,
+          start: 'top 82%',
+          once: true,
+          onEnter: () => {
+            gsap.to(split.words, {
+              opacity: 1, y: 0,
+              duration: 0.6,
+              stagger: 0.05,
+              ease: 'power3.out',
+            });
+          },
+        });
+      }
     }
 
     /* ── About wide CTA ── */
     const ctaWide = document.querySelector('.cta-wide');
     if (ctaWide) {
-      gsap.set(ctaWide, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: ctaWide,
-        start: 'top 90%',
-        onEnter: () => gsap.to(ctaWide, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }),
-      });
+      if (useNativeScroll) {
+        gsap.set(ctaWide, { opacity: 1, y: 0 });
+      } else {
+        gsap.set(ctaWide, { opacity: 0, y: 20 });
+        ScrollTrigger.create({
+          trigger: ctaWide,
+          start: 'top 90%',
+          once: true,
+          onEnter: () => gsap.to(ctaWide, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }),
+        });
+      }
     }
 
     /* ── About body / tags ── */
     ['.about__body', '.about__tags'].forEach(sel => {
       const el = document.querySelector(sel);
       if (!el) return;
+      if (useNativeScroll) {
+        gsap.set(el, { opacity: 1, y: 0 });
+        return;
+      }
       gsap.set(el, { opacity: 0, y: 14 });
       ScrollTrigger.create({
         trigger: el,
         start: 'top 88%',
+        once: true,
         onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }),
       });
     });
@@ -1192,28 +1235,39 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── Code block — machine à écrire + boucle sur les strings ── */
     const codeBlock = document.querySelector('.code-block');
     if (codeBlock) {
-      gsap.set(codeBlock, { opacity: 0, x: 40 });
-      let codeTyperStarted = false;
-      ScrollTrigger.create({
-        trigger: codeBlock,
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.to(codeBlock, { opacity: 1, x: 0, duration: 0.65, ease: 'power3.out' });
-          if (!codeTyperStarted) {
-            codeTyperStarted = true;
-            initCodeTyper(codeBlock);
-          }
-        },
-      });
+      if (useNativeScroll) {
+        gsap.set(codeBlock, { opacity: 1, x: 0 });
+        initCodeTyper(codeBlock);
+      } else {
+        gsap.set(codeBlock, { opacity: 0, x: 40 });
+        let codeTyperStarted = false;
+        ScrollTrigger.create({
+          trigger: codeBlock,
+          start: 'top 85%',
+          once: true,
+          onEnter: () => {
+            gsap.to(codeBlock, { opacity: 1, x: 0, duration: 0.65, ease: 'power3.out' });
+            if (!codeTyperStarted) {
+              codeTyperStarted = true;
+              initCodeTyper(codeBlock);
+            }
+          },
+        });
+      }
     }
 
     /* ── Contact title ── */
     document.querySelectorAll('.contact__line[data-split]').forEach(line => {
+      if (useNativeScroll) {
+        gsap.set(line, { opacity: 1 });
+        return;
+      }
       const split = new SplitType(line, { types: 'chars' });
       gsap.set(split.chars, { yPercent: 110 });
       ScrollTrigger.create({
         trigger: line,
         start: 'top 86%',
+        once: true,
         onEnter: () => {
           gsap.to(split.chars, {
             yPercent: 0,
@@ -1228,12 +1282,17 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── Contact footer ── */
     const contactFooter = document.querySelector('.contact__footer');
     if (contactFooter) {
-      gsap.set(contactFooter, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: contactFooter,
-        start: 'top 90%',
-        onEnter: () => gsap.to(contactFooter, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }),
-      });
+      if (useNativeScroll) {
+        gsap.set(contactFooter, { opacity: 1, y: 0 });
+      } else {
+        gsap.set(contactFooter, { opacity: 0, y: 20 });
+        ScrollTrigger.create({
+          trigger: contactFooter,
+          start: 'top 90%',
+          once: true,
+          onEnter: () => gsap.to(contactFooter, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }),
+        });
+      }
     }
 
     const contactSect = document.getElementById('contact');
@@ -1292,17 +1351,22 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.setAttribute('data-theme', theme);
     }
 
-    themeSections.forEach(({ id, colors }) => {
-      const el = document.querySelector(id);
-      if (!el) return;
-      ScrollTrigger.create({
-        trigger:     el,
-        start:       'top 45%',
-        end:         'bottom 45%',
-        onEnter:     () => setTheme(colors),
-        onEnterBack: () => setTheme(colors),
+    if (!shouldUseNativeScroll()) {
+      themeSections.forEach(({ id, colors }) => {
+        const el = document.querySelector(id);
+        if (!el) return;
+        ScrollTrigger.create({
+          trigger:     el,
+          start:       'top 45%',
+          end:         'bottom 45%',
+          onEnter:     () => setTheme(colors),
+          onEnterBack: () => setTheme(colors),
+        });
       });
-    });
+    } else {
+      document.body.setAttribute('data-theme', 'dark');
+      gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
+    }
 
     initServicesConsole();
 
@@ -1310,7 +1374,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let vvTimer;
       const onViewportResize = () => {
         clearTimeout(vvTimer);
-        vvTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+        vvTimer = setTimeout(() => ScrollTrigger.refresh(), 400);
       };
       window.visualViewport.addEventListener('resize', onViewportResize);
     }
@@ -1476,9 +1540,14 @@ document.addEventListener('DOMContentLoaded', () => {
     runPanelCounts(panels[0]);
 
     gsap.set(consoleEl, { opacity: 0, y: 28 });
+    if (useNativeScroll) {
+      gsap.set(consoleEl, { opacity: 1, y: 0 });
+      return;
+    }
     ScrollTrigger.create({
       trigger: consoleEl,
       start: 'top 82%',
+      once: true,
       onEnter: () => gsap.to(consoleEl, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }),
     });
   }
@@ -1560,8 +1629,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         lenis.scrollTo(target, {
           offset: -80,
-          duration: useNativeScroll ? 0 : 1.4,
-          immediate: useNativeScroll,
+          immediate: false,
         });
       }
     });
