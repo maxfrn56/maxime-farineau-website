@@ -5,7 +5,7 @@ const WORKS_LOGOS = {
   'simply-leads': { src: 'assets/hero/simply-leads-logo.png', max: '60%' },
   'jmmc-shop': { src: 'assets/hero/jmmc-logo.png', max: '64%' },
   'laetitia-nutrition': { src: 'assets/hero/laetitia-logo.png', max: '72%' },
-  'time-saving': { src: 'assets/hero/time-saving-preview.png', max: '100%', preview: true },
+  'time-saving': { src: 'assets/hero/time-saving-logo.png', max: '58%' },
 };
 
 const bounceStates = new WeakMap();
