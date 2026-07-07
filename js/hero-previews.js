@@ -16,23 +16,26 @@
     return `${m.prefix || ''}${m.value}${m.suffix || ''}`;
   }
 
-  function videoSrc(slug) {
-    if (!VIDEO_SLUGS.has(slug)) return '';
-    return `assets/projects/${slug}.mp4`;
+  function mediaSrc(slug, p) {
+    if (VIDEO_SLUGS.has(slug)) return `assets/projects/${slug}.mp4`;
+    if (p?.image) return String(p.image).replace(/^\.\.\//, '');
+    return '';
   }
 
   function buildCard(slug, idx) {
     const p = window.PROJECTS[slug];
     if (!p) return '';
-    const src = videoSrc(slug);
+    const src = mediaSrc(slug, p);
     const mL = p.metricsLeft?.[0];
     const mR = p.metricsRight?.[0];
     const dir = p.deliverables?.[0] || p.type;
     const isActive = idx === 0;
 
-    const stageMedia = src
+    const stageMedia = src.endsWith('.mp4')
       ? `<video class="hero-cmd-mini__video" muted loop playsinline preload="none" data-src="${src}" aria-hidden="true"></video>`
-      : `<div class="hero-cmd-mini__placeholder" aria-hidden="true"></div>`;
+      : src
+        ? `<img class="hero-cmd-mini__video hero-cmd-mini__image" src="${src}" alt="" loading="lazy" />`
+        : `<div class="hero-cmd-mini__placeholder" aria-hidden="true"></div>`;
 
     return `
       <div class="hero__name-card hero__name-card--preview${isActive ? ' is-active' : ''}" data-proj="${idx}" data-project="${slug}" style="--preview-accent:${p.accent}">

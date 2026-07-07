@@ -5,6 +5,7 @@ const WORKS_LOGOS = {
   'simply-leads': { src: 'assets/hero/simply-leads-logo.png', max: '60%' },
   'jmmc-shop': { src: 'assets/hero/jmmc-logo.png', max: '64%' },
   'laetitia-nutrition': { src: 'assets/hero/laetitia-logo.png', max: '72%' },
+  'time-saving': { src: 'assets/hero/time-saving-preview.png', max: '100%', preview: true },
 };
 
 const bounceStates = new WeakMap();
@@ -23,9 +24,13 @@ function buildWorksCards(mountEl) {
     const logo = WORKS_LOGOS[slug];
 
     const logoBlock = logo
-      ? `<div class="works-card__arena" data-bounce-arena>
-          <img class="works-card__logo" src="${logo.src}" alt="" width="200" height="200" loading="lazy" style="--logo-max:${logo.max}" />
-        </div>`
+      ? logo.preview
+        ? `<div class="works-card__arena works-card__arena--preview" data-bounce-arena>
+            <img class="works-card__preview" src="${logo.src}" alt="" width="640" height="360" loading="lazy" />
+          </div>`
+        : `<div class="works-card__arena" data-bounce-arena>
+            <img class="works-card__logo" src="${logo.src}" alt="" width="200" height="200" loading="lazy" style="--logo-max:${logo.max}" />
+          </div>`
       : `<div class="works-card__arena" data-bounce-arena>
           <span class="works-card__logo-fallback" aria-hidden="true">${p.title.charAt(0)}</span>
         </div>`;
@@ -165,7 +170,14 @@ function initWorksCardBounce(mountEl) {
   window.MF?._worksBounceResizeObs?.disconnect();
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  mount.querySelectorAll('[data-bounce-arena]').forEach(setupBounceArena);
+  mount.querySelectorAll('[data-bounce-arena]').forEach((arena) => {
+    if (arena.classList.contains('works-card__arena--preview')) return;
+    setupBounceArena(arena);
+  });
+
+  mount.querySelectorAll('.works-card__arena--preview').forEach((arena) => {
+    bounceStates.delete(arena);
+  });
 
   if (reducedMotion) return;
 

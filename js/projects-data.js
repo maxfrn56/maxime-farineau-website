@@ -38,7 +38,7 @@ window.PROJECTS = {
       '> Stripe checkout · webhook sync...',
       '> Order pipeline · production ready',
     ],
-    prev: 'laetitia-nutrition',
+    prev: 'time-saving',
     next: 'cap-nage',
   },
   'cap-nage': {
@@ -202,6 +202,47 @@ window.PROJECTS = {
       '> Contact forms · online',
     ],
     prev: 'jmmc-shop',
+    next: 'time-saving',
+  },
+  'time-saving': {
+    slug: 'time-saving',
+    title: 'Time Saving',
+    num: '06',
+    year: '2026',
+    type: 'SaaS · CRM Prospection Automatisée',
+    accent: '#121820',
+    image: '../assets/projects/time-saving.jpg',
+    poster: '../assets/projects/time-saving.jpg',
+    description:
+      'CRM de prospection automatique installable en entreprise. Recherche de prospects via Google Places et Sirene, qualification IA (Gemini) sur fiche Google, site web et réseaux, puis envoi de mails personnalisés et relances automatiques à J+4, J+7 et J+12.',
+    role:
+      'Conception produit, développement full stack, intégration APIs (Google Places, Sirene, Gemini), scraping, automatisation email et déploiement multi-tenant pour entreprises.',
+    deliverables: [
+      'Moteur de recherche multi-API',
+      'Scoring IA & qualification prospects',
+      'Emails personnalisés via Gemini',
+      'Relances automatiques J+4 · J+7 · J+12',
+      'Dashboard CRM & campagnes',
+      'Installation & onboarding entreprise',
+    ],
+    stack: ['Next.js', 'PostgreSQL', 'Gemini API', 'Google Places'],
+    metricsLeft: [
+      { label: 'API_SOURCES', value: 3 },
+      { label: 'FOLLOWUP_STEPS', value: 3 },
+      { label: 'CRM_MODULES', value: 6 },
+    ],
+    metricsRight: [
+      { label: 'DELIVERY', value: 14, suffix: ' sem.' },
+      { label: 'AUTO_EMAILS', value: 100, suffix: '%' },
+      { label: 'TIME_SAVED', value: 80, suffix: '%' },
+    ],
+    terminal: [
+      '> Initializing prospect engine...',
+      '> Google Places · Sirene sync...',
+      '> Gemini · scoring pipeline...',
+      '> Email automation · J+4 J+7 J+12 live',
+    ],
+    prev: 'laetitia-nutrition',
     next: 'saline-ceviche',
   },
 };
@@ -212,4 +253,5 @@ window.MF_PROJECT_ORDER = [
   'simply-leads',
   'jmmc-shop',
   'laetitia-nutrition',
+  'time-saving',
 ];

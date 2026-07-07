@@ -110,13 +110,14 @@
     document.body.style.setProperty('--project-accent', data.accent);
   }
 
-  function fitVideoFrame(root) {
+  function fitMediaFrame(root, mediaEl) {
     const wrap = root.querySelector('.project-cmd__video-wrap');
     const frame = root.querySelector('.project-cmd__video-frame');
-    const video = root.querySelector('.js-project-video');
-    if (!wrap || !frame || !video?.videoWidth) return;
+    if (!wrap || !frame || !(mediaEl?.naturalWidth || mediaEl?.videoWidth)) return;
 
-    const ratio = video.videoWidth / video.videoHeight;
+    const width = mediaEl.videoWidth || mediaEl.naturalWidth;
+    const height = mediaEl.videoHeight || mediaEl.naturalHeight;
+    const ratio = width / height;
 
     const apply = () => {
       const maxW = wrap.clientWidth;
@@ -135,11 +136,11 @@
 
       const resEl = root.querySelector('.js-cmd-hud-res');
       const aspectEl = root.querySelector('.js-cmd-hud-aspect');
-      if (resEl) resEl.textContent = `${video.videoWidth}×${video.videoHeight}`;
+      if (resEl) resEl.textContent = `${width}×${height}`;
       if (aspectEl) {
         const gcd = (a, b) => (b ? gcd(b, a % b) : a);
-        const g = gcd(video.videoWidth, video.videoHeight) || 1;
-        aspectEl.textContent = `${video.videoWidth / g}:${video.videoHeight / g}`;
+        const g = gcd(width, height) || 1;
+        aspectEl.textContent = `${width / g}:${height / g}`;
       }
     };
 
@@ -148,6 +149,12 @@
     root.__videoResizeObs?.disconnect();
     root.__videoResizeObs = new ResizeObserver(apply);
     root.__videoResizeObs.observe(wrap);
+  }
+
+  function fitVideoFrame(root) {
+    const video = root.querySelector('.js-project-video');
+    if (!video?.videoWidth) return;
+    fitMediaFrame(root, video);
   }
 
   function resolveVideoSrc(src) {
@@ -160,15 +167,66 @@
     }
   }
 
-  function resetVideo(root) {
+  function resetMedia(root) {
     const video = root.querySelector('.js-project-video');
-    if (!video) return;
-    video.pause();
-    video.removeAttribute('src');
-    video.load();
+    const image = root.querySelector('.js-project-image');
+    if (video) {
+      video.pause();
+      video.removeAttribute('src');
+      video.hidden = false;
+      video.load();
+    }
+    if (image) {
+      image.removeAttribute('src');
+      image.hidden = true;
+    }
     root.classList.remove('has-video');
     root.__videoResizeObs?.disconnect();
     root.__videoResizeObs = null;
+  }
+
+  function resetVideo(root) {
+    resetMedia(root);
+  }
+
+  function loadImage(root, src) {
+    const frame = root.querySelector('.project-cmd__video-frame');
+    const video = root.querySelector('.js-project-video');
+    if (!frame || !src) return;
+
+    resetMedia(root);
+    if (video) video.hidden = true;
+
+    let image = root.querySelector('.js-project-image');
+    if (!image) {
+      image = document.createElement('img');
+      image.className = 'project-cmd__video js-project-image';
+      image.alt = '';
+      frame.insertBefore(image, frame.firstChild);
+    }
+
+    image.hidden = false;
+
+    const onReady = () => {
+      root.classList.add('has-video');
+      fitMediaFrame(root, image);
+    };
+
+    image.addEventListener('load', onReady, { once: true });
+    image.addEventListener('error', () => {
+      root.classList.remove('has-video');
+      image.hidden = true;
+    }, { once: true });
+
+    image.src = resolveVideoSrc(src);
+  }
+
+  function loadMedia(root, data) {
+    if (data?.image) {
+      loadImage(root, data.image);
+      return;
+    }
+    loadVideo(root);
   }
 
   function loadVideo(root) {
@@ -285,7 +343,7 @@
     root.__videoResizeObs?.disconnect();
     root.__videoResizeObs = null;
     root.classList.remove('is-ready', 'has-video');
-    resetVideo(root);
+    resetMedia(root);
     gsap.killTweensOf(root.querySelectorAll('.project-cmd__panel, .project-cmd__viewport, .project-cmd__terminal, .project-cmd__metric, .project-cmd__task, .project-cmd__dir'));
   }
 
@@ -314,7 +372,7 @@
     lockViewport();
     root.classList.remove('is-ready');
     populateContent(root, data);
-    loadVideo(root);
+    loadMedia(root, data);
 
     requestAnimationFrame(() => {
       playEntrance(root);
