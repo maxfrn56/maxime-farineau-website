@@ -16,6 +16,22 @@ const order = orderMatch ? eval(orderMatch[1]) : [];
 const SITE_URL = 'https://maximefarineau.com';
 const OG_IMAGE = `https://www.maximefarineau.com/assets/og-cover.jpg?v=2`;
 
+const THEME_BOOT = `  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('mf-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <style>
+    html[data-theme="light"], html[data-theme="light"] body { background: #F0EDE6; color: #0A0A0A; }
+    html[data-theme="dark"], html[data-theme="dark"] body { background: #0A0A0A; color: #F0EDE6; }
+  </style>`;
+
 function escapeHtml(s) {
   return String(s ?? '')
     .replace(/&/g, '&amp;')
@@ -109,9 +125,11 @@ function page(slug, p) {
 <head>
 ${gtmHead}  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+${THEME_BOOT}
 ${seoHead({ pageTitle, description: metaDesc, canonicalPath: `/projets/${slug}.html` })}
 ${faviconProject}${projectJsonLd(slug, p)}
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/project.css" />
 </head>
 <body class="page-project" data-theme="dark" data-barba="wrapper" style="--project-accent: ${p.accent}">
@@ -139,6 +157,10 @@ ${gtmBody}
             </nav>
           </div>
           <div class="project-cmd__meta">
+            <button type="button" class="theme-toggle theme-toggle--cmd js-theme-toggle" aria-label="Activer le mode clair" aria-pressed="false">
+              <span class="theme-toggle__chip" aria-hidden="true">MODE</span>
+              <span class="theme-toggle__label js-theme-label">DARK</span>
+            </button>
             <span>PROJECT:<em class="js-cmd-num">${p.num}</em></span>
             <span>SESSION:<em>${session}</em></span>
             <span>YEAR:<em class="js-cmd-year">${p.year}</em></span>
@@ -301,6 +323,7 @@ ${gtmBody}
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
   <script src="../js/seo-config.js"></script>
+  <script src="../js/theme.js"></script>
   <script src="../js/projects-data.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/project-page.js"></script>

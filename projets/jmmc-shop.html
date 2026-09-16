@@ -10,6 +10,21 @@
   <!-- End Google Tag Manager -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('mf-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <style>
+    html[data-theme="light"], html[data-theme="light"] body { background: #F0EDE6; color: #0A0A0A; }
+    html[data-theme="dark"], html[data-theme="dark"] body { background: #0A0A0A; color: #F0EDE6; }
+  </style>
   <meta name="description" content="Boutique en ligne haut de gamme pour une marque de mode locale. Mise en scène éditoriale des collections et parcours d\ (Mode · E-Commerce Shopify) — Réalisé pa" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="Maxime Farineau" />
@@ -37,6 +52,7 @@
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"JMMC Shop","description":"Boutique en ligne haut de gamme pour une marque de mode locale. Mise en scène éditoriale des collections et parcours d\\","url":"https://maximefarineau.com/projets/jmmc-shop.html","inLanguage":"fr-FR","dateCreated":"2024","creator":{"@type":"Person","name":"Maxime Farineau","url":"https://maximefarineau.com/"},"keywords":"Mode · E-Commerce Shopify"}</script>
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/project.css" />
 </head>
 <body class="page-project" data-theme="dark" data-barba="wrapper" style="--project-accent: #1A1006">
@@ -68,6 +84,10 @@
             </nav>
           </div>
           <div class="project-cmd__meta">
+            <button type="button" class="theme-toggle theme-toggle--cmd js-theme-toggle" aria-label="Activer le mode clair" aria-pressed="false">
+              <span class="theme-toggle__chip" aria-hidden="true">MODE</span>
+              <span class="theme-toggle__label js-theme-label">DARK</span>
+            </button>
             <span>PROJECT:<em class="js-cmd-num">04</em></span>
             <span>SESSION:<em>04</em></span>
             <span>YEAR:<em class="js-cmd-year">2024</em></span>
@@ -389,6 +409,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
   <script src="../js/seo-config.js"></script>
+  <script src="../js/theme.js"></script>
   <script src="../js/projects-data.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/project-page.js"></script>

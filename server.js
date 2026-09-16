@@ -87,6 +87,10 @@ app.get(['/', '/index', '/index.html'], (_, res) => {
   res.sendFile(path.join(ROOT, 'index.html'));
 });
 
+app.get(['/mentions-legales', '/mentions-legales.html'], (_, res) => {
+  res.sendFile(path.join(ROOT, 'mentions-legales.html'));
+});
+
 app.get('/sitemap.xml', (_, res) => {
   res.type('application/xml');
   res.send(buildSitemap());

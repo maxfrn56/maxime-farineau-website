@@ -2029,6 +2029,16 @@ body[data-theme="light"] {
   margin: 32px 0 12px;
 }
 
+.legal-page__intro {
+  font-family: var(--ff-tommy);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--clr-muted-2);
+  max-width: 68ch;
+  margin-bottom: 8px;
+}
+
 .legal-page p,
 .legal-page li {
   font-family: var(--ff-tommy);
@@ -2037,6 +2047,17 @@ body[data-theme="light"] {
   line-height: 1.75;
   color: var(--clr-muted-2);
   max-width: 68ch;
+}
+
+.legal-page a {
+  color: var(--clr-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.25s;
+}
+
+.legal-page a:hover {
+  opacity: 0.7;
 }
 
 .legal-page ul {

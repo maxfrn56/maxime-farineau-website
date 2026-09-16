@@ -688,8 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (scrollToTop) {
       gsap.killTweensOf(document.body);
-      document.body.setAttribute('data-theme', 'dark');
-      gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
+      window.MF?.applyTheme?.(window.MF.getTheme?.() || 'dark');
     }
 
     requestAnimationFrame(() => {
@@ -1312,10 +1311,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ══════════════════════════════════════════════════
-       THEME — fond sombre uniforme (pas d'inversion clair/sombre)
+       THEME — préférence utilisateur (dark / light)
     ══════════════════════════════════════════════════ */
-    document.body.setAttribute('data-theme', 'dark');
-    gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
+    window.MF?.applyTheme?.(window.MF.getTheme?.() || 'dark');
 
     initServicesConsole();
 
@@ -1333,8 +1331,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ScrollTrigger.refresh();
     resetHomeScroll();
-    document.body.setAttribute('data-theme', 'dark');
-    gsap.set(document.body, { backgroundColor: '#0A0A0A', color: '#F0EDE6' });
+    window.MF?.applyTheme?.(window.MF.getTheme?.() || 'dark');
     document.documentElement.classList.remove('is-preloading');
     requestAnimationFrame(() => {
       resetHomeScroll();

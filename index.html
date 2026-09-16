@@ -101,7 +101,23 @@
       }
     })();
   </script>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('mf-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <style>
+    html[data-theme="light"], html[data-theme="light"] body { background: #F0EDE6; color: #0A0A0A; }
+    html[data-theme="dark"], html[data-theme="dark"] body { background: #0A0A0A; color: #F0EDE6; }
+  </style>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/theme.css" />
   <link rel="stylesheet" href="css/hero-preview.css" />
   <link rel="stylesheet" href="css/works-cmd.css" />
   <link rel="stylesheet" href="css/motion-stack.css" />
@@ -155,6 +171,10 @@
       <a href="/" class="nav__link" data-text="Home"><span>Home</span></a>
       <a href="#works" class="nav__link" data-text="Work"><span>Work</span></a>
       <button class="nav__link nav__contact-btn" data-panel-trigger data-text="Contact" aria-label="Ouvrir le formulaire de contact"><span>Contact</span></button>
+      <button type="button" class="theme-toggle nav__theme-toggle" id="theme-toggle" aria-label="Activer le mode clair" aria-pressed="false">
+        <span class="theme-toggle__chip" aria-hidden="true">MODE</span>
+        <span class="theme-toggle__label js-theme-label">DARK</span>
+      </button>
     </div>
     <div class="nav__status">
       <span class="nav__dot"></span>
@@ -944,7 +964,7 @@
           <nav class="footer__nav" aria-label="Pages du site">
             <a href="#works" class="footer__link">Work</a>
             <a href="#about" class="footer__link">About</a>
-            <a href="mentions-legales.html" class="footer__link">Mentions légales</a>
+            <a href="/mentions-legales.html" class="footer__link" data-barba-prevent="self">Mentions légales</a>
           </nav>
         </div>
         <div class="footer__col">
@@ -1157,6 +1177,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@barba/core@2.9.7/dist/barba.umd.js"></script>
   <script src="js/seo-config.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/projects-data.js"></script>
   <script src="js/works-cards.js"></script>
   <script src="js/hero-previews.js"></script>

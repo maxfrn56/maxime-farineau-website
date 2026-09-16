@@ -111,10 +111,15 @@
     cacheIgnore: false,
     /* Depuis un projet : rechargement complet vers l’accueil (évite l’état Barba cassé) */
     prevent({ el }) {
-      if (!document.body.classList.contains('page-project')) return false;
       const link = el.closest?.('a');
       if (!link) return false;
-      if (!isHomeNavigationHref(link.getAttribute('href'))) return false;
+
+      const href = link.getAttribute('href') || '';
+      if (/mentions-legales/i.test(href)) return true;
+      if (link.hasAttribute('data-barba-prevent')) return true;
+
+      if (!document.body.classList.contains('page-project')) return false;
+      if (!isHomeNavigationHref(href)) return false;
       window.dispatchEvent(
         new CustomEvent('mf:page-leave', {
           detail: {
