@@ -38,7 +38,7 @@ window.PROJECTS = {
       '> Stripe checkout · webhook sync...',
       '> Order pipeline · production ready',
     ],
-    prev: 'time-saving',
+    prev: 'la-marine',
     next: 'cap-nage',
   },
   'cap-nage': {
@@ -243,6 +243,47 @@ window.PROJECTS = {
       '> Email automation · J+4 J+7 J+12 live',
     ],
     prev: 'laetitia-nutrition',
+    next: 'la-marine',
+  },
+  'la-marine': {
+    slug: 'la-marine',
+    title: 'La Marine',
+    num: '07',
+    year: '2026',
+    type: 'Restaurant · Vitrine & Réservation',
+    accent: '#0A1620',
+    image: '../assets/projects/la-marine.jpg',
+    poster: '../assets/projects/la-marine.jpg',
+    description:
+      'Site du plus vieux restaurant de Quiberon, face au port Maria : vitrine immersive (histoire, carte, cocktails, galerie), back-office restaurateur et système de réservation de tables.',
+    role:
+      'Direction artistique, développement du site vitrine, espace restaurateur et module de réservation — de l’identité marine au parcours de réservation.',
+    website: 'https://www.lamarine-quiberon.fr/',
+    deliverables: [
+      'Site vitrine & identité marine',
+      'Carte, galerie & histoire',
+      'Système de réservation',
+      'Back-office restaurateur',
+      'SEO local Quiberon',
+    ],
+    stack: ['Next.js', 'Node.js', 'PostgreSQL'],
+    metricsLeft: [
+      { label: 'SECTIONS', value: 6 },
+      { label: 'GALLERY', value: 10, suffix: '+' },
+      { label: 'ADMIN_MODULES', value: 2 },
+    ],
+    metricsRight: [
+      { label: 'DELIVERY', value: 6, suffix: ' sem.' },
+      { label: 'BOOKING', value: 100, suffix: '%' },
+      { label: 'SINCE', value: 1915 },
+    ],
+    terminal: [
+      '> Loading Port Maria identity...',
+      '> Mounting menu & gallery...',
+      '> Booking engine · table sync...',
+      '> Restaurant site · live',
+    ],
+    prev: 'time-saving',
     next: 'saline-ceviche',
   },
 };
@@ -254,4 +295,5 @@ window.MF_PROJECT_ORDER = [
   'jmmc-shop',
   'laetitia-nutrition',
   'time-saving',
+  'la-marine',
 ];
