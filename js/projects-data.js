@@ -38,7 +38,7 @@ window.PROJECTS = {
       '> Stripe checkout · webhook sync...',
       '> Order pipeline · production ready',
     ],
-    prev: 'la-marine',
+    prev: 'northwind',
     next: 'cap-nage',
   },
   'cap-nage': {
@@ -284,6 +284,44 @@ window.PROJECTS = {
       '> Restaurant site · live',
     ],
     prev: 'time-saving',
+    next: 'northwind',
+  },
+  'northwind': {
+    slug: 'northwind',
+    title: 'Northwind',
+    num: '08',
+    year: '2026',
+    type: 'SaaS · Audit GEO',
+    accent: '#101820',
+    description:
+      'SaaS d’audit GEO. Il interroge les grands modèles, mesure comment une entreprise est citée, puis génère un rapport d’axes pour être visible dans ChatGPT, Gemini, Perplexity et les AI Overviews.',
+    role:
+      'Conception produit, moteur d’audit multi-LLM et génération de rapports actionnables pour les équipes marketing et direction.',
+    deliverables: [
+      'Corpus de prompts métier',
+      'Tests multi-LLM reproductibles',
+      'Score de visibilité par modèle',
+      'Benchmark concurrents & sources',
+      'Rapport d’axes priorisés',
+    ],
+    stack: ['Next.js', 'Python', 'LLM APIs'],
+    metricsLeft: [
+      { label: 'LLM_TARGETS', value: 5 },
+      { label: 'PROMPT_SET', value: 40, suffix: '+' },
+      { label: 'REPORT_BLOCKS', value: 6 },
+    ],
+    metricsRight: [
+      { label: 'MENTION', value: 1, suffix: ' score' },
+      { label: 'CITATIONS', value: 1, suffix: ' trace' },
+      { label: 'AXES', value: 10 },
+    ],
+    terminal: [
+      '> Booting GEO audit engine...',
+      '> Prompt set · ChatGPT Gemini Perplexity...',
+      '> Scoring mentions · sources · rivals...',
+      '> Report · improvement axes ready',
+    ],
+    prev: 'la-marine',
     next: 'saline-ceviche',
   },
 };
@@ -296,4 +334,5 @@ window.MF_PROJECT_ORDER = [
   'laetitia-nutrition',
   'time-saving',
   'la-marine',
+  'northwind',
 ];

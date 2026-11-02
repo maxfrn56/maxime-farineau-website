@@ -9,7 +9,7 @@ window.MF_SEO = {
   home: {
     title: 'Maxime Farineau | Développeur Web Full Stack Freelance — Biarritz',
     description:
-      'Développeur web full stack freelance à Biarritz. Création de sites vitrine, e-commerce, applications web et intégration IA. Performance, design et SEO technique.',
+      'Développeur web full stack à Biarritz. Sites, e-commerce, applications et audits GEO : visibilité de votre marque dans ChatGPT, Gemini, Perplexity et Google AI Overviews.',
     path: '/',
   },
 };
